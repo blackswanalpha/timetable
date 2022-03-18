@@ -1,0 +1,22 @@
+.loader-container {
+    height: 100%;
+    width: 93%;
+    background: white;
+    opacity: 1;
+    z-index: 99;
+}
+
+input.ng-touched.ng-invalid {
+    border: 1px solid red;
+}
+
+.md-errors-spacer {
+    background: rgb(238, 172, 172);
+    color: rgb(185, 18, 18);
+}
+
+small {
+    font-size: 15px;
+    padding: 7px;
+    color: rgb(185, 18, 18);
+}

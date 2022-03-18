@@ -1,0 +1,341 @@
+<!-- <div *ngIf="loaderService.isLoading | async" class="loader-container position-absolute">
+    <mat-spinner strokeWidth="10" [diameter]="65" color="black" title="Tooltip text here" style="top: 10%; left: 50%;color:black;stroke: #0000!important;"></mat-spinner>
+</div> -->
+<div class="container">
+    <div class="row ">
+
+
+
+
+        <div class="col-md-4  ">
+            <form class="form-inline  ">
+                <div class="mb-3 ">
+
+                    <input type="search" (ngModelChange)="searchRooms(key.value)" #key="ngModel" ngModel name="key" id="searchName floatingInput" class="form-control" placeholder="Search Room...">
+                </div>
+            </form>
+        </div>
+
+
+
+        <div class="col-md-2   offset-4 ">
+            <button type="button" class="btn btn-block btn-success" (click)="open(content)">Add New Room</button>
+
+
+        </div>
+
+        <div class="col-md-2  ">
+            <button type="button" class="btn btn-block btn-info text-white" (click)="openUndo(contentUndo)">Undo Room</button>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<div *ngIf="loaderService.isLoading | async" class="loader-container position-absolute">
+    <mat-spinner strokeWidth="10" [diameter]="65" color="black" title="Tooltip text here" style="top: 10%; left: 50%;color:black;stroke: #0000!important;"></mat-spinner>
+</div>
+
+<div class="container">
+    <table class="table table-bordered table-striped mat-elevation-z8">
+        <thead class="table-dark">
+            <tr>
+                <th>Room Id</th>
+                <th>Room Name</th>
+                <th>Room Desc</th>
+                <th>Room Capacity</th>
+                <th>Room Lab</th>
+
+
+                <th> Room Department Id</th>
+                <th>Room Building Id</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let crse of room">
+                <td><span>{{crse.roomId}}</span></td>
+                <td><span>{{crse.roomName}}</span></td>
+                <td><span>{{crse.roomDesc}}</span></td>
+                <td><span>{{crse.roomCapacity}}</span></td>
+                <td><span>{{crse.roomLab}}</span></td>
+
+                <!-- <td><span>{{dept.roomFacultyId}}</span></td> -->
+                <td><span>{{crse.roomDepartmentId}}</span></td>
+                <td><span>{{crse.roomBuildingId}}</span></td>
+                <td class="d-flex justify-content-center">
+                    <button class="btn btn-sm btn-primary text-white" (click)="openDetails(contentDetails, crse)">
+ Details</button>
+                    <button class="btn btn-sm btn-warning text-white " (click)="openEdit(contentEdit, crse)">
+    Edit</button>
+                    <button class="btn btn-sm btn-danger text-white" (click)="openDelete(contentDelete, crse)">
+    Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h2 class="modal-title" id="modal-basic-title">New Room</h2>
+        <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')"> -->
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+
+
+        <!-- <span aria-hidden="true">&times;</span> -->
+        <!-- </button> -->
+    </div>
+    <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="onSubmit(f) ">
+            <div class="form-group">
+                <label for="firstname">Room Name:</label>
+                <div class="input-group">
+                    <input id="firstname" name="roomName" class="form-control " ngModel #roomName="ngModel" required>
+
+                </div>
+                <div class="md-errors-spacer">
+                    <small class="form-text-md" *ngIf="roomName.touched && !roomName.valid">please enter a room name</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="lastname">Room Desc:</label>
+                <div class="input-group">
+                    <input id="lastname" name="roomDesc" class="form-control" #roomDesc="ngModel" ngModel required>
+                </div>
+                <div class="md-errors-spacer">
+                    <small class="form-text-md" *ngIf="roomDesc.touched && !roomDesc.valid">please enter a description</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastname">Room roomCapacity:</label>
+                <div class="input-group">
+                    <input id="lastname" name="roomCapacity" class="form-control" #roomDesc="ngModel" ngModel required>
+                </div>
+                <div class="md-errors-spacer">
+                    <small class="form-text-md" *ngIf="roomDesc.touched && !roomDesc.valid">please enter a description</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastname">Room Lab:</label>
+                <div class="input-group">
+                    <input id="lastname" name="roomLab" class="form-control" #roomDesc="ngModel" ngModel required>
+                </div>
+                <div class="md-errors-spacer">
+                    <small class="form-text-md" *ngIf="roomDesc.touched && !roomDesc.valid">please enter a description</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastname">Room Department Id:</label>
+                <div class="input-group">
+                    <input type='number' id="lastname" name="roomDepartmentId" #roomFacultyId="ngModel" class="form-control" ngModel required>
+                </div>
+                <div class="md-errors-spacer">
+                    <small class="form-text-md" *ngIf="roomFacultyId.touched && !roomFacultyId.valid">please enter a description</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastname">Room Building Id:</label>
+                <div class="input-group">
+                    <input type='number' id="lastname" name="roomBuildingId" #roomFacultyId="ngModel" class="form-control" ngModel required>
+                </div>
+                <div class="md-errors-spacer">
+                    <small class="form-text-md" *ngIf="roomFacultyId.touched && !roomFacultyId.valid">please enter a description</small>
+                </div>
+            </div>
+
+            <div class="modal-footer m-10">
+                <button type="button" id="add-user-form" (click)="openSnackBar('continue in timetable', 'close')" (click)="modal.close('Save click')" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+                <!-- <button  (click)="modal.close('Save click')" type="submit" class="btn btn-primary">Save changes</button> -->
+                <button [disabled]="f.invalid" (click)="modal.close('Save click')" data-dismiss="modal" class="btn btn-info">Submit</button>
+            </div>
+
+
+
+
+        </form>
+    </div>
+
+</ng-template>
+
+
+
+
+<!-- ------see details of room -->
+
+<ng-template #contentDetails let-modal>
+    <div class="modal-header">
+        <h2 class="modal-title" id="modal-basic-title">room Details</h2>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="firstname">Room Name:</label>
+                <div class="input-group">
+                    <input id="fname" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="room">Room Desc:</label>
+                <div class="input-group">
+                    <input id="lname" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="room">Room Capacity:</label>
+                <div class="input-group">
+                    <input id="dept" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="room">Room Lab:</label>
+                <div class="input-group">
+                    <input id="lab" class="form-control">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label>Room Department Id:</label>
+                <div class="input-group">
+                    <input id="email2" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Room Building Id:</label>
+                <div class="input-group">
+                    <input id="cntry" class="form-control">
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+</ng-template>
+
+
+
+
+<!-- -------edit room information -->
+
+
+<ng-template #contentEdit let-modal>
+    <div class="modal-header">
+        <h2 class="modal-title" id="modal-basic-title">Room update</h2>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="onEdit(f)" novalidate>
+
+
+            <div class="form-group">
+                <label for="lastname">Room Id:</label>
+                <div class="input-group">
+                    <input type='number' [(ngModel)]="editForm.roomId" id="roomId" name="roomId" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="firstname">Room Name:</label>
+                <div class="input-group">
+                    <input id="roomName" [(ngModel)]="editForm.roomName" name="roomName" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="lastname">Room Desc:</label>
+                <div class="input-group">
+                    <input id="roomDesc" [(ngModel)]="editForm.roomDesc" name="roomDesc" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastname">Room Department Id:</label>
+                <div class="input-group">
+                    <input type='number' id="roomFacultyId" [(ngModel)]="editForm.roomDepartmentId" name="roomFacultyId" class="form-control">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" id="add-user-form" (click)="modal.close('Save click')" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                <!-- <button  (click)="modal.close('Save click')" type="submit" class="btn btn-primary">Save changes</button> -->
+                <button [disabled]="f.invalid" (click)="modal.close('Save click')" data-dismiss="modal" class="btn btn-primary">Submit</button>
+            </div>
+
+
+
+
+        </form>
+    </div>
+
+</ng-template>
+
+
+
+
+<!-- --------delete room  information  -->
+
+
+
+<ng-template #contentDelete let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Confirm Delete</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      
+    </button>
+    </div>
+    <div class="modal-body">
+        <h2>Are you sure you want to delete this record.</h2>
+        <div class="border text-center">
+            <button data-dismiss="modal" (click)="onDelete()" class="btn btn-danger">Yes, Delete!</button>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+    </div>
+</ng-template>
+
+
+
+
+<!-- --------undo room information  -->
+
+
+
+<ng-template #contentUndo let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Confirm Delete</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      
+    </button>
+    </div>
+    <form #f="ngForm" (ngSubmit)="onUndo(f)" novalidate>
+        <div class="modal-body">
+            <h2>Are you sure you want to undo this record.</h2>
+
+            <div class="form-group">
+                <label for="lastname">Unit Id:</label>
+                <div class="input-group">
+                    <input #unitId type='number' ngModel id="roomId" name="roomId" class="form-control">
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+            <button [disabled]="f.invalid" (click)="modal.close('Save click')" data-dismiss="modal" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</ng-template>

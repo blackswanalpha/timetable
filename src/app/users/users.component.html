@@ -1,0 +1,122 @@
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
+
+
+<pre>{{ closeResult }}</pre>
+<div class="container" id="main-container">
+    <div class="row">
+        <div *ngFor="let user of users" class="col-md-6 col-xl-3">
+            <div class="card m-b-30">
+                <div class="card-body row">
+                    <div class="col-6">
+                        <a href=""><img src="{{user?.userimageUrl}}" alt="" class="img-fluid rounded-circle w-60"></a>
+                    </div>
+                    <div class="col-6 card-title align-self-center mb-0">
+                        <h5>{{user?.userFullName}}</h5>
+                        <p class="m-0">{{user?.userDepartmentId}}</p>
+                    </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><i class="fa fa-envelope float-right"></i>{{user?.userEmail}}</li>
+                    <li class="list-group-item"><i class="fa fa-phone float-right"></i>Phone : {{user?.userMobile}}</li>
+                </ul>
+                <div class="card-body">
+                    <div class="float-right btn-group btn-group-sm">
+                        <a (click)="openDetails(targetModal, user)" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                        <!-- <a (click)="onOpenModal(user, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<ng-template #targetModal let-modal>
+    <div class="modal-header">
+        <h5>Edit Users</h5>
+        <h5 class="modal-title" id="updateUsersModalLabel tlp"> </h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+           </button>
+    </div>
+    <div class="modal-body">
+        <form #addForm="ngForm" (ngSubmit)="onUpdateUsers(addForm)">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Name">
+            </div>
+            <input type="hidden" name="id" class="form-control" id="id" placeholder="Email">
+            <input type="hidden" name="userCode" class="form-control" id="userCode" placeholder="Email">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" name="userEmail" class="form-control" id="email" placeholder="Email">
+            </div>
+            <!-- <div class="form-group">
+                <label for="phone">Job title</label>
+                <input type="number" ngModel="{{editUsers?.userDepartmentId}" name="userDepartmentId" class="form-control" id="jobTitle" placeholder="Job title">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="number" ngModel="{{editUsers?.userMobile}}" name="userMobile" class="form-control" id="phone" name="phone" placeholder="Phone">
+            </div>
+            <div class="form-group">
+                <label for="phone">Image URL</label>
+                <input type="number" ngModel="{{editUsers?.userLoginId}}" name="userLoginId" class="form-control" id="imageUrl" placeholder="Image URL">
+            </div> -->
+            <div class="modal-footer">
+                <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                <button (click)="onUpdateUsers(addForm.value)" data-dismiss="modal" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+    </div>
+
+</ng-template>
+
+
+<hr> userId, , , ,
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <form #addForm="ngForm" (ngSubmit)="onAddUsers(addForm)">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" ngModel name="userFullName" class="form-control" id="name" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" ngModel name="userEmail" class="form-control" id="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">login</label>
+                <input type="number" ngModel name="userLoginId" class="form-control" id="jobTile" placeholder="Job title" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="number" ngModel name="userMobile" class="form-control" id="phone" placeholder="Phone" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Image URL</label>
+                <input type="number" ngModel name="userDepartmentId" class="form-control" id="imageUrl" placeholder="Image URL" required>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="add-user-form" (click)="modal.close('Save click')" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+                <button [disabled]="addForm.invalid" (click)="modal.close('Save click')" type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+
+    </div>
+
+</ng-template>
+
+
+
+
+
+
+, , , ,
+
+<router-outlet></router-outlet>
