@@ -40,7 +40,7 @@ export class CourseComponent implements OnInit {
    editForm = {
    courseId: 0,
     courseName: '',
-    
+    departmentName:'',
     courseDesc: '',
     courseDepartmentId: 0,
    

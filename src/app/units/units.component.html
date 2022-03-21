@@ -52,7 +52,7 @@
                 <td><span>{{unit.unitDesc}}</span></td>
                 <td><span>{{unit.unitRequireLab}}</span></td>
                 <!-- <td><span>{{dept.unitFacultyId}}</span></td> -->
-                <td><span>{{unit.unitCourseId}}</span></td>
+                <td><span>{{unit.courseName}}</span></td>
                 <td class="d-flex justify-content-center">
                     <button class="btn btn-sm btn-primary text-white" (click)="openDetails(contentDetails, unit)">
  Details</button>
@@ -130,9 +130,32 @@
 
             <div class="form-group">
                 <label for="lastname">Unit Course Id:</label>
-                <div class="input-group">
+                <!-- <div class="input-group">
                     <input type='number' id="lastname" name="unitCourseId" #unitFacultyId="ngModel" class="form-control" ngModel required>
-                </div>
+                </div> -->
+                <label for="form"><h5>Departement: click to select departement</h5></label
+        >
+        <div class="form-group">
+          <select
+            name="unitCourseId"
+            ngModel
+            class="form-select selectpicker"
+            required
+          >
+            <option
+              *ngFor="let departement of course"
+              [value]="departement.courseId"
+              selected>{{ departement.courseName }}</option
+            >
+          </select>
+        </div>
+        <!-- <small
+         
+            (!departement.valid && !dep) ||
+            (!departement.valid && departement.dirty)
+          "
+          >Required (Please select Departement).</small
+        > -->
                 <div class="md-errors-spacer">
                     <small class="form-text-md" *ngIf="unitFacultyId.touched && !unitFacultyId.valid">please enter a description</small>
                 </div>

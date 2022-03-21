@@ -16,6 +16,9 @@ import { fadeInOnEnterAnimation, fadeInUpOnEnterAnimation, fadeOutOnLeaveAnimati
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { LoaderService } from '../loader/loader.service';
 import { LoadingHandler } from '../loading';
+import { CourseComponent } from '../course/course.component';
+import { Course } from '../course/course';
+import { CourseService } from '../course/course.service';
 
 @Component({
   selector: 'app-unit',
@@ -44,17 +47,19 @@ export class UnitsComponent implements OnInit {
     unitDesc: '',
     unitCode: '',
     unitCourseId: 0,
+    courseName:'',
+    specializationName:'',
     unitSpecializationId: 0
   } ;
 
-  
+    course: Course[] =[];
 
 
 
 
 
 deleteId = 0;
-  constructor(public  loaderService:LoaderService,private unitService: UnitService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
+  constructor(private courseService: CourseService ,public  loaderService:LoaderService,private unitService: UnitService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
 
 
 
@@ -121,6 +126,8 @@ this.loadingHandler.finish();
     // this.getcourse();
     this.getUnit();
     this.toggleData('dept');
+    this.getCourse();
+    
     
      
      
@@ -204,7 +211,19 @@ onSubmit(f: NgForm) {
   }
 
    
-   
+    public getCourse(): void {
+    this.courseService.getcourse().subscribe(
+      (response: Course[]) => {
+      
+this.course = response;
+
+        console.log(this.course);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
 
 //   const url = 'http://localhost:8888/units/addnew';
 //   this.httpClient.post(url, f.value)
@@ -226,8 +245,8 @@ openDetails(targetModal: any, unit: Unit) {
    (<HTMLElement>document.getElementById('fname')).setAttribute('value', unit.unitName);
    (<HTMLElement>document.getElementById('dept')).setAttribute('value', unit.unitRequireLab);
    (<HTMLElement>document.getElementById('lname')).setAttribute('value', unit.unitDesc);
-   (<HTMLElement>document.getElementById('email2')).setAttribute('value', (unit.unitCourseId).toString());
-   (<HTMLElement>document.getElementById('cntry')).setAttribute('value',( unit.unitSpecializationId).toString());
+   (<HTMLElement>document.getElementById('email2')).setAttribute('value', (unit.courseName).toString());
+   (<HTMLElement>document.getElementById('cntry')).setAttribute('value',( unit.specializationName).toString());
 }
 
 

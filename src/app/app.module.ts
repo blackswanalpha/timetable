@@ -40,6 +40,7 @@ import { SplashComponent } from './splash/splash.component';
 import { BuildingComponent } from './building/building.component';
 import { PlannerComponent } from './planner/planner.component';
 import { SemesterComponent } from './semester/semester.component';
+import { SpecializationComponent } from './specialization/specialization.component';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { SemesterComponent } from './semester/semester.component';
     SplashComponent,
     BuildingComponent,
     PlannerComponent,
-    SemesterComponent
+    SemesterComponent,
+    SpecializationComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule,  BrowserAnimationsModule,ToastrModule.forRoot({
