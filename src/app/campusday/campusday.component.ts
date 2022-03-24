@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Unit } from './units';
+import { Campusday } from './campusday';
 import { ToastrService } from 'ngx-toastr';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
@@ -10,7 +10,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 
 declare var jQuery:any;
 declare var $:any;
-import { UnitService } from './units.service';
+import { CampusdayService } from './campusday.service';
 import { fadeInOnEnterAnimation, fadeInUpOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animations';
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -19,13 +19,11 @@ import { LoadingHandler } from '../loading';
 import { CourseComponent } from '../course/course.component';
 import { Course } from '../course/course';
 import { CourseService } from '../course/course.service';
-import { SpecializationService } from '../specialization/specialization.service';
-import { Specialization } from '../specialization/specialization';
 
 @Component({
-  selector: 'app-unit',
-  templateUrl: './units.component.html',
-  styleUrls: ['./units.component.css'],
+  selector: 'app-campusday',
+  templateUrl: './campusday.component.html',
+  styleUrls: ['./campusday.component.css'],
     animations: [trigger('deleteItem', [
       state('expanded', style({ height: '*', /*display: 'block',*/ color:'black' })),
       state('collapsed', style({ height: '0px', maxHeight: '0', display: 'none', color: 'white' })),
@@ -35,43 +33,41 @@ import { Specialization } from '../specialization/specialization';
  fadeInUpOnEnterAnimation({ anchor: 'enter'}),
   ]
 })
-export class UnitsComponent implements OnInit {
-  unit: Unit[] =[];
+export class CampusdayComponent implements OnInit {
+  campusday: Campusday[] =[];
   // course:Course[]= [];
   closeResult: string = '';
  
   fb: any;
-    editUnit: Unit | undefined;
+    editCampusday: Campusday | undefined;
    editForm = {
-   unitId: 0,
-    unitName: '',
-    unitRequireLab: '',
-    unitDesc: '',
-    unitCode: '',
-    unitCourseId: 0,
-    courseName:'',
-    specializationName:'',
-    unitSpecializationId: 0
+   campusdayId: 0,
+    campusdayTimeslotId: 0,
+    campusdayCampusId:0,
+    campusdayModeId:0,
+
+   
+   campusdayDayId:0
   } ;
 
     course: Course[] =[];
 
-specialization: Specialization[] =[];
+
 
 
 
 deleteId = 0;
-  constructor(private courseService: CourseService ,private specializationService: SpecializationService,public  loaderService:LoaderService,private unitService: UnitService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
+  constructor(private courseService: CourseService ,public  loaderService:LoaderService,private campusdayService: CampusdayService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
 
 
 
 loadingHandler = new LoadingHandler();
   
-toDisplayUnit = false;
+toDisplayCampusday = false;
 toDisplayCourse = false;
  event = window.event;
   undo = {
-    unitId:0
+    campusdayId:0
   };
 
 
@@ -85,12 +81,12 @@ count4: number = 0;
 
     if (this.count == 0){
         this.toDisplayCourse = false;
-this.toDisplayUnit = !this.toDisplayUnit;
+this.toDisplayCampusday = !this.toDisplayCampusday;
 this.count = 1;
     }
      if (this.count == 2){
         this.toDisplayCourse = false;
-this.toDisplayUnit = !this.toDisplayUnit;
+this.toDisplayCampusday = !this.toDisplayCampusday;
 this.count = 2;
 ;
 
@@ -105,7 +101,7 @@ this.count = 2;
 //   event.removeEventListener();  
 // });
   this.toDisplayCourse = false;
-this.toDisplayUnit = !this.toDisplayUnit;
+this.toDisplayCampusday = !this.toDisplayCampusday;
 this.count++;
 this.count2 = 0;
 
@@ -115,7 +111,7 @@ this.count2 = 0;
 }
     else if (name =='crse' && this.count2 == 0  ){
       this.buttonDisabled = false;
-       this.toDisplayUnit = false;
+       this.toDisplayCampusday = false;
        this.toDisplayCourse = !this.toDisplayCourse;
        this.count = 0;
        this.count2++
@@ -126,10 +122,9 @@ this.count2 = 0;
 this.loadingHandler.finish();
   
     // this.getcourse();
-    this.getUnit();
+    this.getCampusday();
     this.toggleData('dept');
     this.getCourse();
-    this.getSpecialization();
     
     
      
@@ -141,13 +136,13 @@ this.loadingHandler.finish();
 
   
 
-  public getUnit(): void {
-    this.unitService.getunit().subscribe(
-      (response: Unit[]) => {
+  public getCampusday(): void {
+    this.campusdayService.getcampusday().subscribe(
+      (response: Campusday[]) => {
       
-this.unit = response;
+this.campusday = response;
 this.loadingHandler.finish();
-        console.log(this.unit);
+        console.log(this.campusday);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -156,7 +151,7 @@ this.loadingHandler.finish();
   }
 
   // public getcourse(): void {
-  //   this.unitService.getcourse().subscribe(
+  //   this.campusdayService.getcourse().subscribe(
   //     (response: Course[]) => {
   //       this.course = response;
   //       console.log(this.course);
@@ -197,10 +192,10 @@ private getDismissReason(reason: any): string {
 onSubmit(f: NgForm) {
 
 
- this.unitService.addUnit(f.value).subscribe(
-      (response: Unit) => {
+ this.campusdayService.addCampusday(f.value).subscribe(
+      (response: Campusday) => {
         console.log(response);
-        this.getUnit();
+        this.getCampusday();
         this.toastr.success('Hello world!', 'Toastr fun!');
 
         f.reset();
@@ -227,21 +222,8 @@ this.course = response;
       }
     );
   }
-   public getSpecialization(): void {
-    this.specializationService.getspecialization().subscribe(
-      data => {
-      
-this.specialization =data;
-this.loadingHandler.finish();
-        console.log(this.specialization);
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
-  }
 
-//   const url = 'http://localhost:8888/units/addnew';
+//   const url = 'http://localhost:8888/campusdays/addnew';
 //   this.httpClient.post(url, f.value)
 //     .subscribe((result) => {
 //       this.ngOnInit(); //reload the table
@@ -251,51 +233,50 @@ this.loadingHandler.finish();
 
 
 
-openDetails(targetModal: any, unit: Unit) {
+openDetails(targetModal: any, campusday: Campusday) {
    this.modalService.open(targetModal, {
     centered: true,
     backdrop: 'static',
     size: 'md'
   });
-  (<HTMLElement>document.getElementById('code')).setAttribute('value', unit.unitCode);
-   (<HTMLElement>document.getElementById('fname')).setAttribute('value', unit.unitName);
-   (<HTMLElement>document.getElementById('dept')).setAttribute('value', unit.unitRequireLab);
-   (<HTMLElement>document.getElementById('lname')).setAttribute('value', unit.unitDesc);
-   (<HTMLElement>document.getElementById('email2')).setAttribute('value', (unit.courseName).toString());
-   (<HTMLElement>document.getElementById('cntry')).setAttribute('value',( unit.specializationName).toString());
+    (<HTMLElement>document.getElementById('fname')).setAttribute('value',( campusday.campusdayDayId).toString());
+   (<HTMLElement>document.getElementById('lname')).setAttribute('value',( campusday.campusdayTimeslotId).toString());
+ 
+//    (<HTMLElement>document.getElementById('fname')).setAttribute('value', campusday.campusdayName);
+// (<HTMLElement>document.getElementById('lname')).setAttribute('value', campusday.campusdayDesc);
+  //  (<HTMLElement>document.getElementById('email2')).setAttribute('value', (campusday.campusdayId).toString());
+   (<HTMLElement>document.getElementById('cntry')).setAttribute('value',( campusday.campusdayCampusId).toString());
+   (<HTMLElement>document.getElementById('dept')).setAttribute('value',( campusday.campusdayModeId).toString());
+  // (<HTMLElement>document.getElementById('cntry')).setAttribute('value',( campusday.campusdayYear).toString());
 }
 
 
 
-openEdit(targetModal: any, unit: Unit) {
+openEdit(targetModal: any, campusday: Campusday) {
   this.modalService.open(targetModal, {
     backdrop: 'static',
     size: 'md'
   });
-this.editForm = unit;
+this.editForm = campusday;
 
   // this.editForm.patchValue( {
-  //   unitId: unit.unitId, 
-  //   unitName: unit.unitName,
-  //   unitEmail: unit.unitEmail,
-  //   unitDesc: unit.unitDesc,
-  //   unitFacultyId: unit.unitFacultyId,
-  //  unitMobile: unit.unitMobile
+  //   campusdayId: campusday.campusdayId, 
+  //   campusdayName: campusday.campusdayName,
+  //   campusdayEmail: campusday.campusdayEmail,
+  //   campusdayDesc: campusday.campusdayDesc,
+  //   campusdayFacultyId: campusday.campusdayFacultyId,
+  //  campusdayMobile: campusday.campusdayMobile
   // });
 
 
 
  
-     (<HTMLElement>document.getElementById('unitId')).setAttribute('value', (unit.unitId).toString());
- (<HTMLElement>document.getElementById('unitId')).setAttribute('data-target',(unit.unitId).toString());
- (<HTMLElement>document.getElementById('unitCode')).setAttribute('value', unit.unitCode);
-   (<HTMLElement>document.getElementById('unitName')).setAttribute('value', unit.unitName);
-   (<HTMLElement>document.getElementById('unitRequireLab')).setAttribute('value', unit.unitRequireLab);
-       (<HTMLElement>document.getElementById('unitEmail')).setAttribute('data-target',(unit.unitRequireLab).toString());
-  
-   (<HTMLElement>document.getElementById('unitDesc')).setAttribute('value', unit.unitDesc);
-   (<HTMLElement>document.getElementById('unitCourseId')).setAttribute('value', (unit.unitCourseId).toString());
-   (<HTMLElement>document.getElementById('unitSpecializationId')).setAttribute('value',( unit.unitSpecializationId).toString());
+     (<HTMLElement>document.getElementById('campusdayId')).setAttribute('value', (campusday.campusdayId).toString());
+ (<HTMLElement>document.getElementById('campusdayId')).setAttribute('data-target',(campusday.campusdayId).toString());
+  (<HTMLElement>document.getElementById('campusdayTimeslotId')).setAttribute('value', (campusday.campusdayTimeslotId).toString());
+    (<HTMLElement>document.getElementById('campusdayDayId')).setAttribute('value', (campusday.campusdayDayId).toString());
+   (<HTMLElement>document.getElementById('campusdayCampusId')).setAttribute('value', (campusday.campusdayCampusId).toString());
+   (<HTMLElement>document.getElementById('campusdayModeId')).setAttribute('value', (campusday.campusdayModeId).toString());
 
 }
 
@@ -303,11 +284,11 @@ this.editForm = unit;
 
  public onEdit(f: NgForm) {
   
- this.unitService.updateUnit(this.editForm).subscribe(
-      (response: Unit) => {
+ this.campusdayService.updateCampusday(this.editForm).subscribe(
+      (response: Campusday) => {
         console.log(response);
-        this.getUnit();
-         this.toastr.success('unit', 'succcessfully updated');
+        this.getCampusday();
+         this.toastr.success('campusday', 'succcessfully updated');
         f.reset();
       },
       (error: HttpErrorResponse) => {
@@ -319,8 +300,8 @@ this.editForm = unit;
   }
 
 
-openDelete(targetModal: any, unit: Unit) {
-  this.editForm = unit;
+openDelete(targetModal: any, campusday: Campusday) {
+  this.editForm = campusday;
   this.modalService.open(targetModal, {
     backdrop: 'static',
     size: 'lg'
@@ -329,10 +310,10 @@ openDelete(targetModal: any, unit: Unit) {
 
 onDelete() {
   
-  this.unitService.deleteUnit(this.editForm).subscribe(
-      (response: Unit) => {
+  this.campusdayService.deleteCampusday(this.editForm).subscribe(
+      (response: Campusday) => {
         console.log(response);
-        this.getUnit();
+        this.getCampusday();
        this.modalService.dismissAll();
       },
       (error: HttpErrorResponse) => {
@@ -357,10 +338,10 @@ onUndo(f: NgForm) {
   this.editForm = f.value;
 console.log(f.value);
   
-  this.unitService.undoUnit(f.value).subscribe(
-      (response: Unit) => {
+  this.campusdayService.undoCampusday(f.value).subscribe(
+      (response: Campusday) => {
         console.log(response);
-        this.getUnit();
+        this.getCampusday();
         this.toastr.success('Hello world!', 'Toastr fun!');
 
         f.reset();
@@ -374,21 +355,25 @@ console.log(f.value);
 }
 
 
-  public searchUnits(key: string): void {
+  public searchCampusdays(key: string): void {
     console.log(key);
-    const results: Unit[] = [];
-    for (const unit of this.unit) {
-      if (unit.unitName.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || unit.unitRequireLab.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || unit.unitDesc.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || unit.unitSpecializationId.toString().toLowerCase().indexOf(key.toLowerCase()) !== -1) {
-        results.push(unit);
+    const results: Campusday[] = [];
+    for (const campusday of this.campusday) {
+      if (campusday.campusdayDayId.toString().toLowerCase().indexOf(key.toLowerCase()) !== -1
+      ) {
+        results.push(campusday);
       }
     }
-    this.unit = results;
+    this.campusday = results;
     if (results.length === 0 || !key) {
-      this.getUnit();
+      this.getCampusday();
     }
   }
 
 }
+
+
+
+// || campusday.campusdayRequireLab.toLowerCase().indexOf(key.toLowerCase()) !== -1
+//       || campusday.campusdayDesc.toLowerCase().indexOf(key.toLowerCase()) !== -1
+//       || campusday.campusdaySpecializationId.toString().toLowerCase().indexOf(key.toLowerCase()) !== -1

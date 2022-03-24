@@ -7,6 +7,7 @@ import { LecturerComponent } from './lecturer/lecturer.component';
 import { LoginComponent } from './login/login.component';
 import { PlannerComponent } from './planner/planner.component';
 import { UsersComponent } from './users/users.component';
+import { ModeComponent } from './mode/mode.component';
 
 
 // const routes: Routes = [{ path: 'lecturer', component: LecturerComponent },{ path: 'users', component: UsersComponent },{ path: 'department', component: DepartmentComponent }];
@@ -41,6 +42,11 @@ const routes: Routes = [
 				path: 'planner',
 				component: PlannerComponent,
 				data: { animationState: 'planner' }
+			},
+			{
+				path: 'mode',
+				component: ModeComponent,
+				data: { animationState: 'mode' }
 			},
 			{
 				path: '**',

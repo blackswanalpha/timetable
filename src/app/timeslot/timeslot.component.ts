@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Unit } from './units';
+import { Timeslot } from './timeslot';
 import { ToastrService } from 'ngx-toastr';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
@@ -10,7 +10,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 
 declare var jQuery:any;
 declare var $:any;
-import { UnitService } from './units.service';
+import { TimeslotService } from './timeslot.service';
 import { fadeInOnEnterAnimation, fadeInUpOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animations';
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -19,13 +19,11 @@ import { LoadingHandler } from '../loading';
 import { CourseComponent } from '../course/course.component';
 import { Course } from '../course/course';
 import { CourseService } from '../course/course.service';
-import { SpecializationService } from '../specialization/specialization.service';
-import { Specialization } from '../specialization/specialization';
 
 @Component({
-  selector: 'app-unit',
-  templateUrl: './units.component.html',
-  styleUrls: ['./units.component.css'],
+  selector: 'app-timeslot',
+  templateUrl: './timeslot.component.html',
+  styleUrls: ['./timeslot.component.css'],
     animations: [trigger('deleteItem', [
       state('expanded', style({ height: '*', /*display: 'block',*/ color:'black' })),
       state('collapsed', style({ height: '0px', maxHeight: '0', display: 'none', color: 'white' })),
@@ -35,43 +33,41 @@ import { Specialization } from '../specialization/specialization';
  fadeInUpOnEnterAnimation({ anchor: 'enter'}),
   ]
 })
-export class UnitsComponent implements OnInit {
-  unit: Unit[] =[];
+export class TimeslotComponent implements OnInit {
+  timeslot: Timeslot[] =[];
   // course:Course[]= [];
   closeResult: string = '';
  
   fb: any;
-    editUnit: Unit | undefined;
+    editTimeslot: Timeslot | undefined;
    editForm = {
-   unitId: 0,
-    unitName: '',
-    unitRequireLab: '',
-    unitDesc: '',
-    unitCode: '',
-    unitCourseId: 0,
-    courseName:'',
-    specializationName:'',
-    unitSpecializationId: 0
+   timeslotId: 0,
+    timeslotName: '',
+    timeslotCampusId:0,
+    timeslotModeId:0,
+
+   
+   timeslotDesc:''
   } ;
 
     course: Course[] =[];
 
-specialization: Specialization[] =[];
+
 
 
 
 deleteId = 0;
-  constructor(private courseService: CourseService ,private specializationService: SpecializationService,public  loaderService:LoaderService,private unitService: UnitService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
+  constructor(private courseService: CourseService ,public  loaderService:LoaderService,private timeslotService: TimeslotService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
 
 
 
 loadingHandler = new LoadingHandler();
   
-toDisplayUnit = false;
+toDisplayTimeslot = false;
 toDisplayCourse = false;
  event = window.event;
   undo = {
-    unitId:0
+    timeslotId:0
   };
 
 
@@ -85,12 +81,12 @@ count4: number = 0;
 
     if (this.count == 0){
         this.toDisplayCourse = false;
-this.toDisplayUnit = !this.toDisplayUnit;
+this.toDisplayTimeslot = !this.toDisplayTimeslot;
 this.count = 1;
     }
      if (this.count == 2){
         this.toDisplayCourse = false;
-this.toDisplayUnit = !this.toDisplayUnit;
+this.toDisplayTimeslot = !this.toDisplayTimeslot;
 this.count = 2;
 ;
 
@@ -105,7 +101,7 @@ this.count = 2;
 //   event.removeEventListener();  
 // });
   this.toDisplayCourse = false;
-this.toDisplayUnit = !this.toDisplayUnit;
+this.toDisplayTimeslot = !this.toDisplayTimeslot;
 this.count++;
 this.count2 = 0;
 
@@ -115,7 +111,7 @@ this.count2 = 0;
 }
     else if (name =='crse' && this.count2 == 0  ){
       this.buttonDisabled = false;
-       this.toDisplayUnit = false;
+       this.toDisplayTimeslot = false;
        this.toDisplayCourse = !this.toDisplayCourse;
        this.count = 0;
        this.count2++
@@ -126,10 +122,9 @@ this.count2 = 0;
 this.loadingHandler.finish();
   
     // this.getcourse();
-    this.getUnit();
+    this.getTimeslot();
     this.toggleData('dept');
     this.getCourse();
-    this.getSpecialization();
     
     
      
@@ -141,13 +136,13 @@ this.loadingHandler.finish();
 
   
 
-  public getUnit(): void {
-    this.unitService.getunit().subscribe(
-      (response: Unit[]) => {
+  public getTimeslot(): void {
+    this.timeslotService.gettimeslot().subscribe(
+      (response: Timeslot[]) => {
       
-this.unit = response;
+this.timeslot = response;
 this.loadingHandler.finish();
-        console.log(this.unit);
+        console.log(this.timeslot);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -156,7 +151,7 @@ this.loadingHandler.finish();
   }
 
   // public getcourse(): void {
-  //   this.unitService.getcourse().subscribe(
+  //   this.timeslotService.getcourse().subscribe(
   //     (response: Course[]) => {
   //       this.course = response;
   //       console.log(this.course);
@@ -197,10 +192,10 @@ private getDismissReason(reason: any): string {
 onSubmit(f: NgForm) {
 
 
- this.unitService.addUnit(f.value).subscribe(
-      (response: Unit) => {
+ this.timeslotService.addTimeslot(f.value).subscribe(
+      (response: Timeslot) => {
         console.log(response);
-        this.getUnit();
+        this.getTimeslot();
         this.toastr.success('Hello world!', 'Toastr fun!');
 
         f.reset();
@@ -227,21 +222,8 @@ this.course = response;
       }
     );
   }
-   public getSpecialization(): void {
-    this.specializationService.getspecialization().subscribe(
-      data => {
-      
-this.specialization =data;
-this.loadingHandler.finish();
-        console.log(this.specialization);
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
-  }
 
-//   const url = 'http://localhost:8888/units/addnew';
+//   const url = 'http://localhost:8888/timeslots/addnew';
 //   this.httpClient.post(url, f.value)
 //     .subscribe((result) => {
 //       this.ngOnInit(); //reload the table
@@ -251,51 +233,47 @@ this.loadingHandler.finish();
 
 
 
-openDetails(targetModal: any, unit: Unit) {
+openDetails(targetModal: any, timeslot: Timeslot) {
    this.modalService.open(targetModal, {
     centered: true,
     backdrop: 'static',
     size: 'md'
   });
-  (<HTMLElement>document.getElementById('code')).setAttribute('value', unit.unitCode);
-   (<HTMLElement>document.getElementById('fname')).setAttribute('value', unit.unitName);
-   (<HTMLElement>document.getElementById('dept')).setAttribute('value', unit.unitRequireLab);
-   (<HTMLElement>document.getElementById('lname')).setAttribute('value', unit.unitDesc);
-   (<HTMLElement>document.getElementById('email2')).setAttribute('value', (unit.courseName).toString());
-   (<HTMLElement>document.getElementById('cntry')).setAttribute('value',( unit.specializationName).toString());
+   (<HTMLElement>document.getElementById('fname')).setAttribute('value', timeslot.timeslotName);
+(<HTMLElement>document.getElementById('lname')).setAttribute('value', timeslot.timeslotDesc);
+  //  (<HTMLElement>document.getElementById('email2')).setAttribute('value', (timeslot.timeslotId).toString());
+   (<HTMLElement>document.getElementById('cntry')).setAttribute('value',( timeslot.timeslotCampusId).toString());
+   (<HTMLElement>document.getElementById('dept')).setAttribute('value',( timeslot.timeslotModeId).toString());
+  // (<HTMLElement>document.getElementById('cntry')).setAttribute('value',( timeslot.timeslotYear).toString());
 }
 
 
 
-openEdit(targetModal: any, unit: Unit) {
+openEdit(targetModal: any, timeslot: Timeslot) {
   this.modalService.open(targetModal, {
     backdrop: 'static',
     size: 'md'
   });
-this.editForm = unit;
+this.editForm = timeslot;
 
   // this.editForm.patchValue( {
-  //   unitId: unit.unitId, 
-  //   unitName: unit.unitName,
-  //   unitEmail: unit.unitEmail,
-  //   unitDesc: unit.unitDesc,
-  //   unitFacultyId: unit.unitFacultyId,
-  //  unitMobile: unit.unitMobile
+  //   timeslotId: timeslot.timeslotId, 
+  //   timeslotName: timeslot.timeslotName,
+  //   timeslotEmail: timeslot.timeslotEmail,
+  //   timeslotDesc: timeslot.timeslotDesc,
+  //   timeslotFacultyId: timeslot.timeslotFacultyId,
+  //  timeslotMobile: timeslot.timeslotMobile
   // });
 
 
 
  
-     (<HTMLElement>document.getElementById('unitId')).setAttribute('value', (unit.unitId).toString());
- (<HTMLElement>document.getElementById('unitId')).setAttribute('data-target',(unit.unitId).toString());
- (<HTMLElement>document.getElementById('unitCode')).setAttribute('value', unit.unitCode);
-   (<HTMLElement>document.getElementById('unitName')).setAttribute('value', unit.unitName);
-   (<HTMLElement>document.getElementById('unitRequireLab')).setAttribute('value', unit.unitRequireLab);
-       (<HTMLElement>document.getElementById('unitEmail')).setAttribute('data-target',(unit.unitRequireLab).toString());
-  
-   (<HTMLElement>document.getElementById('unitDesc')).setAttribute('value', unit.unitDesc);
-   (<HTMLElement>document.getElementById('unitCourseId')).setAttribute('value', (unit.unitCourseId).toString());
-   (<HTMLElement>document.getElementById('unitSpecializationId')).setAttribute('value',( unit.unitSpecializationId).toString());
+     (<HTMLElement>document.getElementById('timeslotId')).setAttribute('value', (timeslot.timeslotId).toString());
+ (<HTMLElement>document.getElementById('timeslotId')).setAttribute('data-target',(timeslot.timeslotId).toString());
+  (<HTMLElement>document.getElementById('timeslotName')).setAttribute('value', timeslot.timeslotName);
+    (<HTMLElement>document.getElementById('timeslotDesc')).setAttribute('value', timeslot.timeslotDesc);
+   (<HTMLElement>document.getElementById('timeslotCampusId')).setAttribute('value', (timeslot.timeslotCampusId).toString());
+   (<HTMLElement>document.getElementById('timeslotModeId')).setAttribute('value', (timeslot.timeslotModeId).toString());
 
 }
 
@@ -303,11 +281,11 @@ this.editForm = unit;
 
  public onEdit(f: NgForm) {
   
- this.unitService.updateUnit(this.editForm).subscribe(
-      (response: Unit) => {
+ this.timeslotService.updateTimeslot(this.editForm).subscribe(
+      (response: Timeslot) => {
         console.log(response);
-        this.getUnit();
-         this.toastr.success('unit', 'succcessfully updated');
+        this.getTimeslot();
+         this.toastr.success('timeslot', 'succcessfully updated');
         f.reset();
       },
       (error: HttpErrorResponse) => {
@@ -319,8 +297,8 @@ this.editForm = unit;
   }
 
 
-openDelete(targetModal: any, unit: Unit) {
-  this.editForm = unit;
+openDelete(targetModal: any, timeslot: Timeslot) {
+  this.editForm = timeslot;
   this.modalService.open(targetModal, {
     backdrop: 'static',
     size: 'lg'
@@ -329,10 +307,10 @@ openDelete(targetModal: any, unit: Unit) {
 
 onDelete() {
   
-  this.unitService.deleteUnit(this.editForm).subscribe(
-      (response: Unit) => {
+  this.timeslotService.deleteTimeslot(this.editForm).subscribe(
+      (response: Timeslot) => {
         console.log(response);
-        this.getUnit();
+        this.getTimeslot();
        this.modalService.dismissAll();
       },
       (error: HttpErrorResponse) => {
@@ -357,10 +335,10 @@ onUndo(f: NgForm) {
   this.editForm = f.value;
 console.log(f.value);
   
-  this.unitService.undoUnit(f.value).subscribe(
-      (response: Unit) => {
+  this.timeslotService.undoTimeslot(f.value).subscribe(
+      (response: Timeslot) => {
         console.log(response);
-        this.getUnit();
+        this.getTimeslot();
         this.toastr.success('Hello world!', 'Toastr fun!');
 
         f.reset();
@@ -374,21 +352,25 @@ console.log(f.value);
 }
 
 
-  public searchUnits(key: string): void {
+  public searchTimeslots(key: string): void {
     console.log(key);
-    const results: Unit[] = [];
-    for (const unit of this.unit) {
-      if (unit.unitName.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || unit.unitRequireLab.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || unit.unitDesc.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || unit.unitSpecializationId.toString().toLowerCase().indexOf(key.toLowerCase()) !== -1) {
-        results.push(unit);
+    const results: Timeslot[] = [];
+    for (const timeslot of this.timeslot) {
+      if (timeslot.timeslotName.toLowerCase().indexOf(key.toLowerCase()) !== -1
+      ) {
+        results.push(timeslot);
       }
     }
-    this.unit = results;
+    this.timeslot = results;
     if (results.length === 0 || !key) {
-      this.getUnit();
+      this.getTimeslot();
     }
   }
 
 }
+
+
+
+// || timeslot.timeslotRequireLab.toLowerCase().indexOf(key.toLowerCase()) !== -1
+//       || timeslot.timeslotDesc.toLowerCase().indexOf(key.toLowerCase()) !== -1
+//       || timeslot.timeslotSpecializationId.toString().toLowerCase().indexOf(key.toLowerCase()) !== -1

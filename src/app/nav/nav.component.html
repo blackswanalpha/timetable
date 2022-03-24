@@ -179,7 +179,7 @@
             <li><a href="#" class="article">logout</a></li>
         </ul>
     </mat-drawer>
-    <mat-drawer-content class="content  " [@triggerName]="prepareRoute(outlet)">
+    <mat-drawer-content class="content  " >
         <div>
 
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -252,12 +252,20 @@
 
 
                     </li>
+                       <li ngbNavItem>
+
+                        <a class="navbar-brand p-3" ngbNavLink [routerLink]="['/mode']" href="/mode">mode</a>
+
+
+                    </li>
                 </ul>
                 <!-- <div [ngbNavOutlet]="nav"></div> -->
             </nav>
-            <router-outlet #outlet="outlet">
+            <div [@triggerName]="prepareRoute(outlet)">
+            <router-outlet #outlet="outlet" >
 
             </router-outlet>
+            </div>
         </div>
     </mat-drawer-content>
 </mat-drawer-container>

@@ -141,6 +141,7 @@
             ngModel
             class="form-select selectpicker"
             required
+             #unitFacultyId="ngModel"
           >
             <option
               *ngFor="let departement of course"
@@ -161,13 +162,38 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="lastname">Unit Specialization Id:</label>
-                <div class="input-group">
-                    <input type='number' id="lastname" name="unitSpecializationId" #unitFacultyId="ngModel" class="form-control" ngModel required>
-                </div>
+                  <div class="form-group">
+                <label for="lastname">Unit Specialization:</label>
+                <!-- <div class="input-group">
+                    <input type='number' id="lastname" name="unitCourseId" #unitFacultyId="ngModel" class="form-control" ngModel required>
+                </div> -->
+                <label for="form"><h5>Departement: click to select departement</h5></label
+        >
+        <div class="form-group">
+          <select
+            name="unitCourseId"
+            ngModel
+            class="form-select selectpicker"
+            required
+          >
+            <option
+              *ngFor="let departement of specialization"
+              [value]="departement.specializationId"
+              selected>{{ departement.specializationName }}</option
+            >
+          </select>
+        </div>
+        <!-- <small
+         
+            (!departement.valid && !dep) ||
+            (!departement.valid && departement.dirty)
+          "
+          >Required (Please select Departement).</small
+        > -->
                 <div class="md-errors-spacer">
                     <small class="form-text-md" *ngIf="unitFacultyId.touched && !unitFacultyId.valid">please enter a description</small>
                 </div>
+            </div>
             </div>
 
             <div class="modal-footer m-10">
@@ -292,8 +318,35 @@
             </div>
             <div class="form-group">
                 <label for="lastname">Unit Course Id:</label>
-                <div class="input-group">
-                    <input type='number' id="unitCourseId" [(ngModel)]="editForm.unitCourseId" name="unitCourseId" class="form-control">
+                <!-- <div class="input-group">
+                    <input type='number' id="lastname" name="unitCourseId" #unitFacultyId="ngModel" class="form-control" ngModel required>
+                </div> -->
+                <label for="form"><h5>Departement: click to select departement</h5></label
+        >
+        <div class="form-group">
+          <select
+            name="unitCourseId"
+           [(ngModel)]="editForm.unitCourseId" 
+            class="form-select selectpicker"
+            required
+            #unitFacultyId="ngModel"
+          >
+            <option
+              *ngFor="let departement of course"
+              [value]="departement.courseId"
+              selected>{{ departement.courseName }}</option
+            >
+          </select>
+        </div>
+        <!-- <small
+         
+            (!departement.valid && !dep) ||
+            (!departement.valid && departement.dirty)
+          "
+          >Required (Please select Departement).</small
+        > -->
+                <div class="md-errors-spacer">
+                    <small class="form-text-md" *ngIf="unitFacultyId.touched && !unitFacultyId.valid">please enter a description</small>
                 </div>
             </div>
 

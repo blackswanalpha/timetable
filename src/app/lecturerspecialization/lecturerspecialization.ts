@@ -1,6 +1,6 @@
-export interface Specialization {
+export interface Lecturerspecialization {
 
 //     constructor( public departmentId:number:number;departmentMobile:number:number;departmentFacultyId:number:number;
 //  departmentName:string:number;departmentDesc:string:number;departmentEmail:string){}
-specializationId:number;specializationName:string; specializationDesc:string;
+lecturerspecializationId:number; lecturerspecializationLecturerId:number;  lecturerspecializationSpecializationId:number;
 }

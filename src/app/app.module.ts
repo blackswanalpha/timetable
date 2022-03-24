@@ -41,6 +41,11 @@ import { BuildingComponent } from './building/building.component';
 import { PlannerComponent } from './planner/planner.component';
 import { SemesterComponent } from './semester/semester.component';
 import { SpecializationComponent } from './specialization/specialization.component';
+import { ModeComponent } from './mode/mode.component';
+import { TimeslotComponent } from './timeslot/timeslot.component';
+import { DayComponent } from './day/day.component';
+import { CampusdayComponent } from './campusday/campusday.component';
+import { LecturerspecializationComponent } from './lecturerspecialization/lecturerspecialization.component';
 
 
 @NgModule({
@@ -63,7 +68,12 @@ import { SpecializationComponent } from './specialization/specialization.compone
     BuildingComponent,
     PlannerComponent,
     SemesterComponent,
-    SpecializationComponent
+    SpecializationComponent,
+    ModeComponent,
+    TimeslotComponent,
+    DayComponent,
+    CampusdayComponent,
+    LecturerspecializationComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule,  BrowserAnimationsModule,ToastrModule.forRoot({

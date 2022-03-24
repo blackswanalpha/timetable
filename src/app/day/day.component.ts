@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Lecturer } from './lecturer';
+import { Day } from './day';
 import { ToastrService } from 'ngx-toastr';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
@@ -10,7 +10,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 
 declare var jQuery:any;
 declare var $:any;
-import { LecturerService } from './lecturer.service';
+import { DayService } from './day.service';
 import { fadeInOnEnterAnimation, fadeInUpOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animations';
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -18,9 +18,9 @@ import { LoaderService } from '../loader/loader.service';
 import { LoadingHandler } from '../loading';
 
 @Component({
-  selector: 'app-lecturer',
-  templateUrl: './lecturer.component.html',
-  styleUrls: ['./lecturer.component.css'],
+  selector: 'app-day',
+  templateUrl: './day.component.html',
+  styleUrls: ['./day.component.css'],
     animations: [trigger('deleteItem', [
       state('expanded', style({ height: '*', /*display: 'block',*/ color:'black' })),
       state('collapsed', style({ height: '0px', maxHeight: '0', display: 'none', color: 'white' })),
@@ -30,17 +30,17 @@ import { LoadingHandler } from '../loading';
  fadeInUpOnEnterAnimation({ anchor: 'enter'}),
   ]
 })
-export class LecturerComponent implements OnInit {
-  lecturer: Lecturer[] =[];
-  // lecturer:Lecturer[]= [];
+export class DayComponent implements OnInit {
+  day: Day[] =[];
+  // day:Day[]= [];
   closeResult: string = '';
  
   fb: any;
-    editLecturer: Lecturer | undefined;
+    editDay: Day | undefined;
    editForm = {
-   lecturerId:0,lecturerContact:0,lecturerLoginId:0, lecturerStaffNo:0,lecturerTypeId:0,
-lecturerName:'',lecturerEmail:'',lecturerImage:'',lecturerGender:'',lecturerLocation:'',lecturerActive:'',
-
+   dayId: 0,
+    dayName: '',
+    dayDesc: ''
   } ;
 
   
@@ -55,7 +55,7 @@ deleteId = 0;
 
 // loadingHandler = new LoadingHandler();
   
-toDisplayLecturer = false;
+toDisplayDay = false;
 toDisplayFaculty = false;
 toDisplayCourse = false;
 toDisplayUnit = false;
@@ -71,7 +71,7 @@ count3: number = 0;
 count4: number = 0; 
 
 
-  constructor(public  loaderService:LoaderService,private lecturerService: LecturerService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
+  constructor(public  loaderService:LoaderService,private dayService: DayService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
 
 
   toggleData(name:string) {
@@ -82,7 +82,7 @@ count4: number = 0;
   this.toDisplayCourse = false;
   this.toDisplayUnit = false;
   this.toDisplayFaculty = false;
-this.toDisplayLecturer = !this.toDisplayLecturer;
+this.toDisplayDay = !this.toDisplayDay;
 
 this.count++;
 this.count2 = 0;
@@ -92,7 +92,7 @@ this.count3 = 0;
 }
     else if (name =='crse' && this.count2 == 0  ){
       this.buttonDisabled = false;
-       this.toDisplayLecturer = false;
+       this.toDisplayDay = false;
        this.toDisplayUnit = false;
        this.toDisplayFaculty = false;
        this.toDisplayCourse = !this.toDisplayCourse;
@@ -104,7 +104,7 @@ this.count3 = 0;
     }
      else if (name =='unit' && this.count3 == 0  ){
       this.buttonDisabled = false;
-       this.toDisplayLecturer = false;
+       this.toDisplayDay = false;
        this.toDisplayCourse= false;
        this.toDisplayFaculty = false;
         this.toDisplayUnit = !this.toDisplayUnit;
@@ -116,7 +116,7 @@ this.count3 = 0;
     }
      else if (name =='falc' && this.count4 == 0  ){
       this.buttonDisabled = false;
-       this.toDisplayLecturer = false;
+       this.toDisplayDay = false;
         this.toDisplayFaculty = !this.toDisplayFaculty;
        this.toDisplayCourse= false;
         this.toDisplayUnit = false;
@@ -133,8 +133,8 @@ this.count3 = 0;
   ngOnInit():void {
 // this.loadingHandler.finish();
   
-    // this.getlecturer();
-    this.getLecturer();
+    // this.getday();
+    this.getDay();
     this.toggleData('dept');
     
      
@@ -146,13 +146,13 @@ this.count3 = 0;
 
   
 
-  public getLecturer(): void {
-    this.lecturerService.getlecturer().subscribe(
-      (response: Lecturer[]) => {
+  public getDay(): void {
+    this.dayService.getday().subscribe(
+      (response: Day[]) => {
       
-this.lecturer = response;
+this.day = response;
 // this.loadingHandler.finish();
-        console.log(this.lecturer);
+        console.log(this.day);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -160,11 +160,11 @@ this.lecturer = response;
     );
   }
 
-  // public getlecturer(): void {
-  //   this.lecturerService.getlecturer().subscribe(
-  //     (response: Lecturer[]) => {
-  //       this.lecturer = response;
-  //       console.log(this.lecturer);
+  // public getday(): void {
+  //   this.dayService.getday().subscribe(
+  //     (response: Day[]) => {
+  //       this.day = response;
+  //       console.log(this.day);
   //     },
   //     (error: HttpErrorResponse) => {
   //       alert(error.message);
@@ -202,10 +202,10 @@ private getDismissReason(reason: any): string {
 onSubmit(f: NgForm) {
 
 
- this.lecturerService.addLecturer(f.value).subscribe(
-      (response: Lecturer) => {
+ this.dayService.addDay(f.value).subscribe(
+      (response: Day) => {
         console.log(response);
-        this.getLecturer();
+        this.getDay();
         this.toastr.success('Hello world!', 'Toastr fun!');
 
         f.reset();
@@ -220,7 +220,7 @@ onSubmit(f: NgForm) {
    
    
 
-//   const url = 'http://localhost:8888/lecturers/addnew';
+//   const url = 'http://localhost:8888/days/addnew';
 //   this.httpClient.post(url, f.value)
 //     .subscribe((result) => {
 //       this.ngOnInit(); //reload the table
@@ -230,48 +230,50 @@ onSubmit(f: NgForm) {
 
 
 
-openDetails(targetModal: any, lecturer: Lecturer) {
+openDetails(targetModal: any, day: Day) {
    this.modalService.open(targetModal, {
     centered: true,
     backdrop: 'static',
     size: 'md'
   });
-  
-      (<HTMLElement>document.getElementById('dept')).setAttribute('value',( lecturer.lecturerStaffNo).toString());
-   (<HTMLElement>document.getElementById('email2')).setAttribute('value', (lecturer.lecturerTypeId).toString());
-  //  (<HTMLElement>document.getElementById('cntry')).setAttribute('value',( lecturer.lecturerMobile).toString());
+     (<HTMLElement>document.getElementById('fname')).setAttribute('value', day.dayName);
+  //  (<HTMLElement>document.getElementById('dept')).setAttribute('value', day.dayRequireLab);
+   (<HTMLElement>document.getElementById('lname')).setAttribute('value', day.dayDesc);
+   //   (<HTMLElement>document.getElementById('dept')).setAttribute('value',( day.daySemesterId).toString());
+  // (<HTMLElement>document.getElementById('email2')).setAttribute('value', (day.dayUnitId).toString());
+  //  (<HTMLElement>document.getElementById('cntry')).setAttribute('value',( day.dayMobile).toString());
 }
 
 
 
-openEdit(targetModal: any, lecturer: Lecturer) {
+openEdit(targetModal: any, day: Day) {
   this.modalService.open(targetModal, {
     backdrop: 'static',
     size: 'md'
   });
-this.editForm = lecturer;
+this.editForm = day;
 
   // this.editForm.patchValue( {
-  //   lecturerId: lecturer.lecturerId, 
-  //   lecturerName: lecturer.lecturerName,
-  //   lecturerEmail: lecturer.lecturerEmail,
-  //   lecturerDesc: lecturer.lecturerDesc,
-  //   lecturerFacultyId: lecturer.lecturerFacultyId,
-  //  lecturerMobile: lecturer.lecturerMobile
+  //   dayId: day.dayId, 
+  //   dayName: day.dayName,
+  //   dayEmail: day.dayEmail,
+  //   dayDesc: day.dayDesc,
+  //   dayFacultyId: day.dayFacultyId,
+  //  dayMobile: day.dayMobile
   // });
 
 
 
  
-     (<HTMLElement>document.getElementById('lecturerId')).setAttribute('value', (lecturer.lecturerId).toString());
- (<HTMLElement>document.getElementById('lecturerId')).setAttribute('data-target',(lecturer.lecturerId).toString());
-   (<HTMLElement>document.getElementById('lecturerName')).setAttribute('value', lecturer.lecturerName);
-   (<HTMLElement>document.getElementById('lecturerEmail')).setAttribute('value', lecturer.lecturerEmail);
-  //      (<HTMLElement>document.getElementById('lecturerEmail')).setAttribute('data-target',(lecturer.lecturerEmail).toString());
+     (<HTMLElement>document.getElementById('dayId')).setAttribute('value', (day.dayId).toString());
+ (<HTMLElement>document.getElementById('dayId')).setAttribute('data-target',(day.dayId).toString());
+  (<HTMLElement>document.getElementById('dayName')).setAttribute('value', day.dayName);
+  //  (<HTMLElement>document.getElementById('dayEmail')).setAttribute('value', day.dayEmail);
+  //      (<HTMLElement>document.getElementById('dayEmail')).setAttribute('data-target',(day.dayEmail).toString());
   
-  //  (<HTMLElement>document.getElementById('lecturerDesc')).setAttribute('value', lecturer.lecturerDesc);
-   (<HTMLElement>document.getElementById('lecturerlecturerTypeId')).setAttribute('value', (lecturer.lecturerTypeId).toString());
-   (<HTMLElement>document.getElementById('lecturerStaffNo')).setAttribute('value',( lecturer.lecturerStaffNo).toString());
+   (<HTMLElement>document.getElementById('dayDesc')).setAttribute('value', day.dayDesc);
+  //  (<HTMLElement>document.getElementById('daySemesterId')).setAttribute('value', (day.daySemesterId).toString());
+  //  (<HTMLElement>document.getElementById('dayUnitId')).setAttribute('value',( day.dayUnitId).toString());
 
 }
 
@@ -279,11 +281,11 @@ this.editForm = lecturer;
 
  public onEdit(f: NgForm) {
   
- this.lecturerService.updateLecturer(this.editForm).subscribe(
-      (response: Lecturer) => {
+ this.dayService.updateDay(this.editForm).subscribe(
+      (response: Day) => {
         console.log(response);
-        this.getLecturer();
-         this.toastr.success('lecturer', 'succcessfully updated');
+        this.getDay();
+         this.toastr.success('day', 'succcessfully updated');
         f.reset();
       },
       (error: HttpErrorResponse) => {
@@ -295,8 +297,8 @@ this.editForm = lecturer;
   }
 
 
-openDelete(targetModal: any, lecturer: Lecturer) {
-  this.editForm = lecturer;
+openDelete(targetModal: any, day: Day) {
+  this.editForm = day;
   this.modalService.open(targetModal, {
     backdrop: 'static',
     size: 'lg'
@@ -305,10 +307,10 @@ openDelete(targetModal: any, lecturer: Lecturer) {
 
 onDelete() {
   
-  this.lecturerService.deleteLecturer(this.editForm).subscribe(
-      (response: Lecturer) => {
+  this.dayService.deleteDay(this.editForm).subscribe(
+      (response: Day) => {
         console.log(response);
-        this.getLecturer();
+        this.getDay();
        this.modalService.dismissAll();
       },
       (error: HttpErrorResponse) => {
@@ -319,20 +321,20 @@ onDelete() {
 }
 
 
-  public searchLecturers(key: string): void {
+  public searchDays(key: string): void {
     // console.log(key);
-    // const results: Lecturer[] = [];
-    // for (const lecturer of this.lecturer) {
-    //   if (lecturer.lecturerName.toLowerCase().indexOf(key.toLowerCase()) !== -1
-    //   || lecturer.lecturerEmail.toLowerCase().indexOf(key.toLowerCase()) !== -1
-    //   || lecturer.lecturerDesc.toLowerCase().indexOf(key.toLowerCase()) !== -1
-    //   || lecturer.lecturerMobile.toString().toLowerCase().indexOf(key.toLowerCase()) !== -1) {
-    //     results.push(lecturer);
+    // const results: Day[] = [];
+    // for (const day of this.day) {
+    //   if (day.dayName.toLowerCase().indexOf(key.toLowerCase()) !== -1
+    //   || day.dayEmail.toLowerCase().indexOf(key.toLowerCase()) !== -1
+    //   || day.dayDesc.toLowerCase().indexOf(key.toLowerCase()) !== -1
+    //   || day.dayMobile.toString().toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+    //     results.push(day);
     //   }
     // }
-    // this.lecturer = results;
+    // this.day = results;
     // if (results.length === 0 || !key) {
-    //   this.getLecturer();
+    //   this.getDay();
     // }
   }
 
@@ -352,10 +354,10 @@ onUndo(f: NgForm) {
   this.editForm = f.value;
 console.log(f.value);
   
-  this.lecturerService.undoLecturer(f.value).subscribe(
-      (response:  Lecturer) => {
+  this.dayService.undoDay(f.value).subscribe(
+      (response:  Day) => {
         console.log(response);
-        this.getLecturer();
+        this.getDay();
         this.toastr.success('Hello world!', 'Toastr fun!');
 
         f.reset();
@@ -369,3 +371,4 @@ console.log(f.value);
 }
 
 }
+
