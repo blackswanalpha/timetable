@@ -34,7 +34,7 @@
     <table class="table table-bordered table-striped mat-elevation-z8">
         <thead class="table-dark">
             <tr>
-                <th>Unit Id</th>
+                <!-- <th>Unit Id</th> -->
                 <th>Unit Code</th>
                 <th>Unit Name</th>
 
@@ -46,7 +46,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let unit of unit">
-                <td><span>{{unit.unitId}}</span></td>
+                <!-- <td><span>{{unit.unitId}}</span></td> -->
                 <td><span>{{unit.unitCode}}</span></td>
                 <td><span>{{unit.unitName}}</span></td>
                 <td><span>{{unit.unitDesc}}</span></td>
@@ -161,7 +161,7 @@
                     <small class="form-text-md" *ngIf="unitFacultyId.touched && !unitFacultyId.valid">please enter a description</small>
                 </div>
             </div>
-            <div class="form-group">
+            
                   <div class="form-group">
                 <label for="lastname">Unit Specialization:</label>
                 <!-- <div class="input-group">
@@ -194,7 +194,7 @@
                     <small class="form-text-md" *ngIf="unitFacultyId.touched && !unitFacultyId.valid">please enter a description</small>
                 </div>
             </div>
-            </div>
+            
 
             <div class="modal-footer m-10">
                 <button type="button" id="add-user-form" (click)="openSnackBar('continue in timetable', 'close')" (click)="modal.close('Save click')" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
@@ -285,12 +285,12 @@
         <form #f="ngForm" (ngSubmit)="onEdit(f)" novalidate>
 
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="lastname">Unit Id:</label>
                 <div class="input-group">
                     <input type='number' [(ngModel)]="editForm.unitId" id="unitId" name="unitId" class="form-control">
                 </div>
-            </div>
+            </div> -->
             <div class="form-group">
                 <label for="firstname">Unit Code:</label>
                 <div class="input-group">
@@ -321,24 +321,17 @@
                 <!-- <div class="input-group">
                     <input type='number' id="lastname" name="unitCourseId" #unitFacultyId="ngModel" class="form-control" ngModel required>
                 </div> -->
-                <label for="form"><h5>Departement: click to select departement</h5></label
-        >
-        <div class="form-group">
-          <select
-            name="unitCourseId"
-           [(ngModel)]="editForm.unitCourseId" 
-            class="form-select selectpicker"
-            required
-            #unitFacultyId="ngModel"
-          >
+
+                <div class="form-group">
+                    <select name="unitCourseId" [(ngModel)]="editForm.unitCourseId" class="form-select selectpicker" required #unitFacultyId="ngModel">
             <option
               *ngFor="let departement of course"
               [value]="departement.courseId"
               selected>{{ departement.courseName }}</option
             >
           </select>
-        </div>
-        <!-- <small
+                </div>
+                <!-- <small
          
             (!departement.valid && !dep) ||
             (!departement.valid && departement.dirty)
@@ -352,8 +345,28 @@
 
             <div class="form-group">
                 <label for="lastname">Unit Specialization Id:</label>
-                <div class="input-group">
-                    <input type='number' id="unitSpecializationId" [(ngModel)]="editForm.unitSpecializationId" name="unitSpecializationId" class="form-control">
+                <!-- <div class="input-group">
+                    <input type='number' id="lastname" name="unitCourseId" #unitFacultyId="ngModel" class="form-control" ngModel required>
+                </div> -->
+
+                <div class="form-group">
+                    <select name="unitCourseId" [(ngModel)]="editForm.unitCourseId" class="form-select selectpicker" required #unitFacultyId="ngModel">
+            <option
+              *ngFor="let departement of specialization"
+              [value]="departement.specializationId"
+              selected>{{ departement.specializationName }}</option
+            >
+          </select>
+                </div>
+                <!-- <small
+         
+            (!departement.valid && !dep) ||
+            (!departement.valid && departement.dirty)
+          "
+          >Required (Please select Departement).</small
+        > -->
+                <div class="md-errors-spacer">
+                    <small class="form-text-md" *ngIf="unitFacultyId.touched && !unitFacultyId.valid">please enter a description</small>
                 </div>
             </div>
 
