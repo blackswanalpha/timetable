@@ -46,6 +46,7 @@ import { TimeslotComponent } from './timeslot/timeslot.component';
 import { DayComponent } from './day/day.component';
 import { CampusdayComponent } from './campusday/campusday.component';
 import { LecturerspecializationComponent } from './lecturerspecialization/lecturerspecialization.component';
+import { LecturertypeComponent } from './lecturertype/lecturertype.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { LecturerspecializationComponent } from './lecturerspecialization/lectur
     TimeslotComponent,
     DayComponent,
     CampusdayComponent,
-    LecturerspecializationComponent
+    LecturerspecializationComponent,
+    LecturertypeComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule,  BrowserAnimationsModule,ToastrModule.forRoot({

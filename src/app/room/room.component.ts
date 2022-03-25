@@ -16,6 +16,10 @@ import { fadeInOnEnterAnimation, fadeInUpOnEnterAnimation, fadeOutOnLeaveAnimati
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { LoaderService } from '../loader/loader.service';
 import { LoadingHandler } from '../loading';
+import { Department } from '../department/department';
+import { DepartmentService } from '../department/department.service';
+import { Building } from '../building/building';
+import { BuildingService } from '../building/building.service';
 
 @Component({
   selector: 'app-room',
@@ -31,7 +35,7 @@ import { LoadingHandler } from '../loading';
   ]
 })
 export class RoomComponent implements OnInit {
-  room: Room[] =[];
+  room: Room[] =[];  department: Department[] =[];  building: Building[] =[];
   // room:Room[]= [];
   closeResult: string = '';
  
@@ -44,7 +48,8 @@ export class RoomComponent implements OnInit {
       roomLab: '',
     roomDesc: '',
     roomDepartmentId: 0,
-    roomBuildingId: 0
+    roomBuildingId: 0,
+    buildingName:'', departmentName:'',
    
   } ;
 
@@ -55,7 +60,7 @@ export class RoomComponent implements OnInit {
 
 
 deleteId = 0;
-  constructor(public  loaderService:LoaderService,private roomService: RoomService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
+  constructor(public  loaderService:LoaderService,private departmentService: DepartmentService,private buildingService: BuildingService,private roomService: RoomService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
 
 
 
@@ -82,7 +87,8 @@ this.toDisplayRoom = !this.toDisplayRoom;}
     // this.getroom();
     this.getRoom();
     this.toggleData('dept');
-    
+    this.getDepartment();
+    this.getBuilding();
      
      
    
@@ -101,7 +107,35 @@ this.room = response;
       }
     );
   }
+ public getDepartment(): void {
+    this.departmentService.getdepartment().subscribe(
+      (response: Department[]) => {
+      
+this.department = response;
+// this.loadingHandler.finish();
+        console.log(this.department);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
 
+
+  
+  public getBuilding(): void {
+    this.buildingService.getbuilding().subscribe(
+      (response: Building[]) => {
+      
+this.building = response;
+this.loadingHandler.finish();
+        console.log(this.building);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
   // public getroom(): void {
   //   this.roomService.getroom().subscribe(
   //     (response: Room[]) => {
@@ -183,8 +217,8 @@ openDetails(targetModal: any, room: Room) {
    (<HTMLElement>document.getElementById('dept')).setAttribute('value', room.roomCapacity);
     (<HTMLElement>document.getElementById('lab')).setAttribute('value', room.roomLab);
    (<HTMLElement>document.getElementById('lname')).setAttribute('value', room.roomDesc);
-   (<HTMLElement>document.getElementById('email2')).setAttribute('value', (room.roomDepartmentId).toString());
-   (<HTMLElement>document.getElementById('cntry')).setAttribute('value',( room.roomBuildingId).toString());
+   (<HTMLElement>document.getElementById('email2')).setAttribute('value', (room.departmentName).toString());
+   (<HTMLElement>document.getElementById('cntry')).setAttribute('value',( room.buildingName).toString());
 }
 
 
@@ -212,8 +246,9 @@ this.editForm = room;
  (<HTMLElement>document.getElementById('roomId')).setAttribute('data-target',(room.roomId).toString());
    (<HTMLElement>document.getElementById('roomName')).setAttribute('value', room.roomName);
   //  (<HTMLElement>document.getElementById('roomEmail')).setAttribute('value', room.roomEmail);
-  //      (<HTMLElement>document.getElementById('roomEmail')).setAttribute('data-target',(room.roomEmail).toString());
+  //    roomLab  (<HTMLElement>document.getElementById('roomEmail')).setAttribute('data-target',(room.roomEmail).toString());
   
+   (<HTMLElement>document.getElementById('roomLab')).setAttribute('value', room.roomLab);
    (<HTMLElement>document.getElementById('roomDesc')).setAttribute('value', room.roomDesc);
    (<HTMLElement>document.getElementById('roomFacultyId')).setAttribute('value', (room.roomDepartmentId).toString());
   //  (<HTMLElement>document.getElementById('roomMobile')).setAttribute('value',( room.roomMobile).toString());

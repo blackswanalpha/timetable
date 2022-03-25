@@ -51,7 +51,7 @@ import {
 } from '@angular/animations';
 
 export const routeTransitionAnimations = trigger('triggerName', [
-	transition('lecturer=> users, users=> department, department =>institution ,lecturer=>institution ,users=>institution,lecturer=>planner, users=> planner, department =>planner,institution=>planner ,lecturer=> department', [
+	transition('lecturer=> users, users=> department, department =>institution ,lecturer=>institution ,users=>institution,lecturer=>planner, users=> planner, department =>planner,institution=>planner,planner=>mode,lecturer=>mode,users=>mode,department=>mode,institution=>mode,lecturer=> department', [
 		style({ position: 'relative' }),
 		query(':enter, :leave', [
 			style({
@@ -69,7 +69,7 @@ export const routeTransitionAnimations = trigger('triggerName', [
 		]),
 		query(':enter', animateChild())
 	]),
-	transition('planner=> institution,institution=> department,department => users, users=> lecturer,planner=> lecturer,institution=> lecturer ,planner=> department,department => lecturer,institution=> users,institution=> users', [
+	transition('planner=> institution,institution=> department,department => users, users=> lecturer,mode=> lecturer,planner=> lecturer,mode=> institution,institution=> lecturer,mode=> department,mode=>planner,mode=>users ,planner=> department,department => lecturer,institution=> users,institution=> users', [
 		style({ position: 'relative' }),
 		query(':enter, :leave', [
 			style({

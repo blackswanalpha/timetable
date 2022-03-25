@@ -16,6 +16,8 @@ import { fadeInOnEnterAnimation, fadeInUpOnEnterAnimation, fadeOutOnLeaveAnimati
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { LoaderService } from '../loader/loader.service';
 import { LoadingHandler } from '../loading';
+import { Institution } from '../institution/institution';
+import { InstitutionService } from '../institution/institution.service';
 
 @Component({
   selector: 'app-faculty',
@@ -32,6 +34,7 @@ import { LoadingHandler } from '../loading';
 })
 export class FacultyComponent implements OnInit {
   faculty: Faculty[] =[];
+   institution: Institution[] =[];
   // faculty:Faculty[]= [];
   closeResult: string = '';
  
@@ -43,7 +46,8 @@ export class FacultyComponent implements OnInit {
     facultyEmail: '',
     facultyDesc: '',
     facultyInstitutionId: 0,
-    facultyMobile: 0
+    facultyMobile: 0,
+    institutionName:''
   } ;
 
   
@@ -53,7 +57,7 @@ export class FacultyComponent implements OnInit {
 
 
 deleteId = 0;
-  constructor(public  loaderService:LoaderService,private facultyService: FacultyService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
+  constructor(public  loaderService:LoaderService,private institutionService: InstitutionService,private facultyService: FacultyService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
 
 
 
@@ -67,7 +71,7 @@ this.loadingHandler.finish();
   
     // this.getfaculty();
     this.getFaculty();
-    
+    this.getInstitution()
     
      
      
@@ -85,6 +89,19 @@ this.loadingHandler.finish();
 this.faculty = response;
 this.loadingHandler.finish();
         console.log(this.faculty);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+    public getInstitution(): void {
+    this.institutionService.getinstitution().subscribe(
+      (response: Institution[]) => {
+      
+this.institution = response;
+this.loadingHandler.finish();
+        console.log(this.institution);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -171,7 +188,7 @@ openDetails(targetModal: any, faculty: Faculty) {
    (<HTMLElement>document.getElementById('fname')).setAttribute('value', faculty.facultyName);
    (<HTMLElement>document.getElementById('dept')).setAttribute('value', faculty.facultyEmail);
    (<HTMLElement>document.getElementById('lname')).setAttribute('value', faculty.facultyDesc);
-   (<HTMLElement>document.getElementById('email2')).setAttribute('value', (faculty.facultyInstitutionId).toString());
+   (<HTMLElement>document.getElementById('email2')).setAttribute('value', (faculty.institutionName).toString());
    (<HTMLElement>document.getElementById('cntry')).setAttribute('value',( faculty.facultyMobile).toString());
 }
 

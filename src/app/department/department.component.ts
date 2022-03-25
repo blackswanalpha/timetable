@@ -16,6 +16,8 @@ import { fadeInOnEnterAnimation, fadeInUpOnEnterAnimation, fadeOutOnLeaveAnimati
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { LoaderService } from '../loader/loader.service';
 import { LoadingHandler } from '../loading';
+import { FacultyService } from '../faculty/faculty.service';
+import { Faculty } from '../faculty/faculty';
 
 @Component({
   selector: 'app-department',
@@ -32,6 +34,7 @@ import { LoadingHandler } from '../loading';
 })
 export class DepartmentComponent implements OnInit {
   department: Department[] =[];
+  faculty: Faculty[] =[];
   // department:Department[]= [];
   closeResult: string = '';
  
@@ -43,7 +46,8 @@ export class DepartmentComponent implements OnInit {
     departmentEmail: '',
     departmentDesc: '',
     departmentFacultyId: 0,
-    departmentMobile: 0
+    departmentMobile: 0,
+    facultyName:''
   } ;
 
   
@@ -74,7 +78,7 @@ count3: number = 0;
 count4: number = 0; 
 
 
-  constructor(public  loaderService:LoaderService,private departmentService: DepartmentService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
+  constructor(public  loaderService:LoaderService,private facultyService: FacultyService,private departmentService: DepartmentService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
 
 
   toggleData(name:string) {
@@ -139,6 +143,7 @@ this.count3 = 0;
     // this.getdepartment();
     this.getDepartment();
     this.toggleData('dept');
+    this.getFaculty();
     
      
      
@@ -162,7 +167,19 @@ this.department = response;
       }
     );
   }
+public getFaculty(): void {
+    this.facultyService.getfaculty().subscribe(
+      (response: Faculty[]) => {
+      
+this.faculty = response;
 
+        console.log(this.faculty);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
   // public getdepartment(): void {
   //   this.departmentService.getdepartment().subscribe(
   //     (response: Department[]) => {
@@ -242,7 +259,7 @@ openDetails(targetModal: any, department: Department) {
    (<HTMLElement>document.getElementById('fname')).setAttribute('value', department.departmentName);
    (<HTMLElement>document.getElementById('dept')).setAttribute('value', department.departmentEmail);
    (<HTMLElement>document.getElementById('lname')).setAttribute('value', department.departmentDesc);
-   (<HTMLElement>document.getElementById('email2')).setAttribute('value', (department.departmentFacultyId).toString());
+   (<HTMLElement>document.getElementById('email2')).setAttribute('value', (department.facultyName).toString());
    (<HTMLElement>document.getElementById('cntry')).setAttribute('value',( department.departmentMobile).toString());
 }
 

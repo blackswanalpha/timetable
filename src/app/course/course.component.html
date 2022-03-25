@@ -35,7 +35,7 @@
     <table class="table table-bordered table-striped mat-elevation-z8">
         <thead class="table-dark">
             <tr>
-                <th>Course Id</th>
+                <!-- <th>Course Id</th> -->
                 <th>Course Name</th>
 
                 <th>Course Desc</th>
@@ -46,7 +46,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let crse of course">
-                <td><span>{{crse.courseId}}</span></td>
+                <!-- <td><span>{{crse.courseId}}</span></td> -->
                 <td><span>{{crse.courseName}}</span></td>
 
                 <td><span>{{crse.courseDesc}}</span></td>
@@ -102,12 +102,29 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="lastname">Course Department Id:</label>
-                <div class="input-group">
-                    <input type='number' id="lastname" name="courseDepartmentId" #courseFacultyId="ngModel" class="form-control" ngModel required>
+                <label for="lastname">course Department Id:</label>
+                <!-- <div class="input-group">
+                    <input type='number' id="lastname" name="unitCourseId" #unitFacultyId="ngModel" class="form-control" ngModel required>
+                </div> -->
+
+                <div class="form-group">
+                    <select name="courseDepartmentId" ngModel class="form-select selectpicker" required>
+            <option
+              *ngFor="let departement of department"
+              [value]="departement.departmentId"
+              selected>{{ departement.departmentName }}</option
+            >
+          </select>
                 </div>
+                <!-- <small
+         
+            (!departement.valid && !dep) ||
+            (!departement.valid && departement.dirty)
+          "
+          >Required (Please select Departement).</small
+        > -->
                 <div class="md-errors-spacer">
-                    <small class="form-text-md" *ngIf="courseFacultyId.touched && !courseFacultyId.valid">please enter a description</small>
+                    <small class="form-text-md" *ngIf="courseName.touched && !courseName.valid">please enter a description</small>
                 </div>
             </div>
 
@@ -179,12 +196,12 @@
         <form #f="ngForm" (ngSubmit)="onEdit(f)" novalidate>
 
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="lastname">Course Id:</label>
                 <div class="input-group">
                     <input type='number' [(ngModel)]="editForm.courseId" id="courseId" name="courseId" class="form-control">
                 </div>
-            </div>
+            </div> -->
             <div class="form-group">
                 <label for="firstname">Course Name:</label>
                 <div class="input-group">
@@ -199,10 +216,35 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="lastname">Course Department Id:</label>
-                <div class="input-group">
-                    <input type='number' id="courseFacultyId" [(ngModel)]="editForm.courseDepartmentId" name="courseFacultyId" class="form-control">
-                </div>
+                <label for="lastname">Unit Specialization:</label>
+                <!-- <div class="input-group">
+                    <input type='number' id="lastname" name="unitCourseId" #unitFacultyId="ngModel" class="form-control" ngModel required>
+                </div> -->
+                <label for="form"><h5>Departement: click to select departement</h5></label
+        >
+        <div class="form-group">
+          <select
+            name="unitCourseId"
+            [(ngModel)]="editForm.courseDepartmentId" 
+            class="form-select selectpicker"
+            
+            required
+          >
+            <option
+              *ngFor="let departement of department"
+              [value]="departement.departmentId"
+              selected>{{ departement.departmentName }}</option
+            >
+          </select>
+        </div>
+        <!-- <small
+         
+            (!departement.valid && !dep) ||
+            (!departement.valid && departement.dirty)
+          "
+          >Required (Please select Departement).</small
+        > -->
+                
             </div>
 
             <div class="modal-footer">
@@ -269,10 +311,10 @@
                 </div>
             </div>
 
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
-            <button [disabled]="f.invalid" (click)="modal.close('Save click')" data-dismiss="modal" class="btn btn-primary">Submit</button>
-        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+        <button [disabled]="f.invalid" (click)="modal.close('Save click')" data-dismiss="modal" class="btn btn-primary">Submit</button>
+    </div>
     </form>
 </ng-template>

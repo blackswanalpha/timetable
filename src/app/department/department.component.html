@@ -126,7 +126,7 @@
         <table class="table table-bordered table-striped mat-elevation-z8">
             <thead class="table-dark">
                 <tr>
-                    <th>Department Id</th>
+                    <!-- <th>Department Id</th> -->
                     <th>Department Name</th>
                     <th>Department Email</th>
                     <th>Department Desc</th>
@@ -137,7 +137,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let dept of department">
-                    <td><span>{{dept.departmentId}}</span></td>
+                    <!-- <td><span>{{dept.departmentId}}</span></td> -->
                     <td><span>{{dept.departmentName}}</span></td>
                     <td><span>{{dept.departmentEmail}}</span></td>
                     <td><span>{{dept.departmentDesc}}</span></td>
@@ -222,12 +222,27 @@
             </div>
             <div class="form-group">
                 <label for="lastname">Department Faculty Id:</label>
-                <div class="input-group">
-                    <input type='number' id="lastname" name="departmentFacultyId" #departmentFacultyId="ngModel" class="form-control" ngModel required>
+                <!-- <div class="input-group">
+                    <input type='number' id="lastname" name="unitCourseId" #unitFacultyId="ngModel" class="form-control" ngModel required>
+                </div> -->
+
+                <div class="form-group">
+                    <select name="departmentFacultyId" ngModel class="form-select selectpicker" required>
+            <option
+              *ngFor="let departement of faculty"
+              [value]="departement.facultyId"
+              selected>{{ departement.facultyName }}</option
+            >
+          </select>
                 </div>
-                <div class="md-errors-spacer">
-                    <small class="form-text-md" *ngIf="departmentFacultyId.touched && !departmentFacultyId.valid">please enter a description</small>
-                </div>
+                <!-- <small
+         
+            (!departement.valid && !dep) ||
+            (!departement.valid && departement.dirty)
+          "
+          >Required (Please select Departement).</small
+        > -->
+
             </div>
             <div class="form-group">
                 <label for="lastname">Department Mobile:</label>
@@ -316,12 +331,12 @@
         <form #f="ngForm" (ngSubmit)="onEdit(f)" novalidate>
 
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="lastname">Department Id:</label>
                 <div class="input-group">
                     <input type='number' [(ngModel)]="editForm.departmentId" id="departmentId" name="departmentId" class="form-control">
                 </div>
-            </div>
+            </div> -->
             <div class="form-group">
                 <label for="firstname">Department Name:</label>
                 <div class="input-group">
@@ -342,9 +357,27 @@
             </div>
             <div class="form-group">
                 <label for="lastname">Department Faculty Id:</label>
-                <div class="input-group">
-                    <input type='number' id="departmentFacultyId" [(ngModel)]="editForm.departmentFacultyId" name="departmentFacultyId" class="form-control">
+                <!-- <div class="input-group">
+                    <input type='number' id="lastname" name="unitCourseId" #unitFacultyId="ngModel" class="form-control" ngModel required>
+                </div> -->
+
+                <div class="form-group">
+                    <select name="departmentFacultyId" [(ngModel)]="editForm.departmentFacultyId" class="form-select selectpicker" required>
+            <option
+              *ngFor="let departement of faculty"
+              [value]="departement.facultyId"
+              selected>{{ departement.facultyName }}</option
+            >
+          </select>
                 </div>
+                <!-- <small
+         
+            (!departement.valid && !dep) ||
+            (!departement.valid && departement.dirty)
+          "
+          >Required (Please select Departement).</small
+        > -->
+
             </div>
             <div class="form-group">
                 <label for="lastname">Department Mobile:</label>

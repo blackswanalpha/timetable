@@ -15,7 +15,7 @@ export class SplashComponent implements OnInit {
   showSplash = true;
 
   @Input() animationDuration: number = 0.5;
-  @Input() duration: number = 3;
+  @Input() duration: number = 2;
   @Input() animationType: SplashAnimationType = SplashAnimationType.FadeOut;
 
 

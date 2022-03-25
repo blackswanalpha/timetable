@@ -16,6 +16,8 @@ import { fadeInOnEnterAnimation, fadeInUpOnEnterAnimation, fadeOutOnLeaveAnimati
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { LoaderService } from '../loader/loader.service';
 import { LoadingHandler } from '../loading';
+import { DepartmentService } from '../department/department.service';
+import { Department } from '../department/department';
 
 @Component({
   selector: 'app-course',
@@ -32,6 +34,7 @@ import { LoadingHandler } from '../loading';
 })
 export class CourseComponent implements OnInit {
   course: Course[] =[];
+    department: Department[] =[];
   // course:Course[]= [];
   closeResult: string = '';
  
@@ -53,7 +56,7 @@ export class CourseComponent implements OnInit {
 
 
 deleteId = 0;
-  constructor(public  loaderService:LoaderService,private courseService: CourseService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
+  constructor(public  loaderService:LoaderService,private departmentService: DepartmentService,private courseService: CourseService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
 
 
 
@@ -66,7 +69,7 @@ loadingHandler = new LoadingHandler();
   
     // this.getcourse();
     this.getCourse();
-    
+    this.getDepartment();
     
      
      
@@ -86,7 +89,19 @@ this.course = response;
       }
     );
   }
-
+public getDepartment(): void {
+    this.departmentService.getdepartment().subscribe(
+      (response: Department[]) => {
+      
+this.department = response;
+// this.loadingHandler.finish();
+        console.log(this.department);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
   // public getcourse(): void {
   //   this.courseService.getcourse().subscribe(
   //     (response: Course[]) => {
