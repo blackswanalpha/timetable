@@ -167,23 +167,17 @@
                 <!-- <div class="input-group">
                     <input type='number' id="lastname" name="unitCourseId" #unitFacultyId="ngModel" class="form-control" ngModel required>
                 </div> -->
-                <label for="form"><h5>Departement: click to select departement</h5></label
-        >
-        <div class="form-group">
-          <select
-            name="unitCourseId"
-            ngModel
-            class="form-select selectpicker"
-            required
-          >
+
+                <div class="form-group">
+                    <select name="unitCourseId" ngModel class="form-select selectpicker" required>
             <option
               *ngFor="let departement of specialization"
               [value]="departement.specializationId"
               selected>{{ departement.specializationName }}</option
             >
           </select>
-        </div>
-        <!-- <small
+                </div>
+                <!-- <small
          
             (!departement.valid && !dep) ||
             (!departement.valid && departement.dirty)
@@ -194,7 +188,7 @@
                     <small class="form-text-md" *ngIf="unitFacultyId.touched && !unitFacultyId.valid">please enter a description</small>
                 </div>
             </div>
-            
+
 
             <div class="modal-footer m-10">
                 <button type="button" id="add-user-form" (click)="openSnackBar('continue in timetable', 'close')" (click)="modal.close('Save click')" class="btn btn-outline-dark" data-dismiss="modal">Close</button>

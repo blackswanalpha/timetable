@@ -1,4 +1,4 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -18,6 +18,7 @@ import { LoaderService } from '../loader/loader.service';
 import { LoadingHandler } from '../loading';
 import { FacultyService } from '../faculty/faculty.service';
 import { Faculty } from '../faculty/faculty';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-department',
@@ -70,7 +71,8 @@ toDisplayUnit = false;
 
 event = window.event;
   
-
+ pdfList: any[] = environment.pdfs;
+  pdfDocumentSrc: any = environment.pdfs[0];
 
 count: number = 0; 
 count2: number = 0; 
@@ -78,7 +80,7 @@ count3: number = 0;
 count4: number = 0; 
 
 
-  constructor(public  loaderService:LoaderService,private facultyService: FacultyService,private departmentService: DepartmentService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
+  constructor(private http: HttpClient,public  loaderService:LoaderService,private facultyService: FacultyService,private departmentService: DepartmentService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
 
 
   toggleData(name:string) {
@@ -163,7 +165,7 @@ this.department = response;
         console.log(this.department);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.openSnackBar(error.message, 'Close');
       }
     );
   }
@@ -176,7 +178,8 @@ this.faculty = response;
         console.log(this.faculty);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+      // this.openSnackBar(error.message, 'Close');
+      console.log(error.message);
       }
     );
   }
@@ -191,6 +194,48 @@ this.faculty = response;
   //     }
   //   );
   // }
+// showPdf(pdfFile: any, $event: any) {
+    // this.pdfList.forEach(pdf => pdf.selected = false);
+// this.http.get(myUrl).subscribe(response => {
+//    let  byteCharacters = atob(response.Bytes);
+//    var byteNumbers = new Array(byteCharacters.length);
+//    for (var i = 0; i < byteCharacters.length; i++) {
+//       byteNumbers[i] = byteCharacters.charCodeAt(i);
+//    }
+//    var byteArray = new Uint8Array(byteNumbers);
+//    var blob = new Blob([byteArray], {type: "application/pdf"});
+//    var fileURL = URL.createObjectURL(blob);
+//    window.open(fileURL, '_blank');
+// })
+//   }
+
+generateReport(){
+    let format:string = "pdf"
+
+    this.departmentService.generateCustomersReport(format).subscribe(result=>{
+// const file = new Blob([result.data], { type: 'application/pdf' });
+ const a = document.createElement('a');
+      const fileURL = URL.createObjectURL(result);
+      console.log(`File URL is`)
+      console.log(fileURL)
+      // a.href = fileURL;
+      // a.download = 'department.pdf';
+      a.click();
+      window.open(fileURL);
+      // URL.revokeObjectURL(fileURL);
+      
+//       let w : Window = window.open(fileURL) ;
+//         w.print();
+//       w.addEventListener('load', function () {
+//     w.document.title = "foo1";
+// })
+      
+    })
+
+  }
+
+
+
 
 
 
@@ -333,7 +378,7 @@ onDelete() {
        this.modalService.dismissAll();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+       this.openSnackBar(error.message, 'Close');
         this.modalService.dismissAll();
       }
     );
@@ -382,7 +427,7 @@ console.log(f.value);
         f.reset();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+     this.openSnackBar(error.message, 'Close');
         f.reset();
         this.toastr.error('unSuccessful!', error.message);
       }

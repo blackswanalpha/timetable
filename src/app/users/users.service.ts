@@ -24,5 +24,9 @@ export class UsersService {
   public updateUsers(users: Users): Observable<Users> {
     return this.http.post<Users>(`${this.apiServerUrl}/timetable/user/updateUser`, users);
   }
+      public findByUserName(user: Users): Observable<Users> {
 
+        console.log(user.userFullName);
+    return this.http.get<Users>(`${this.apiServerUrl}/timetable/user/findByUserName`, { params: { userName: user.userFullName } });
+  }
 }

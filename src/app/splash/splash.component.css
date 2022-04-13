@@ -1,5 +1,5 @@
 .app-splash-screen {
-    background: skyblue;
+    background: white;
     position: fixed;
     top: 0;
     left: 0;
@@ -38,13 +38,18 @@
     height: 100px;
 }
 
-.app-loader {
+.app-loader svg {
     background: url("./../../assets/img/three-dots.svg");
     background-repeat: no-repeat;
     max-width: 100%;
+    fill: red;
     background-position: center;
     background-size: contain;
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     margin-top: 80px;
+}
+
+.change-my-color {
+    filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
 }

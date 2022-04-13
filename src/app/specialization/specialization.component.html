@@ -34,7 +34,7 @@
     <table class="table table-bordered table-striped mat-elevation-z8">
         <thead class="table-dark">
             <tr>
-                <th>Specialization Id</th>
+                <!-- <th>Specialization Id</th> -->
 
                 <th>Specialization Name</th>
 
@@ -45,7 +45,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let specialization of specialization">
-                <td>{{specialization.specializationId}}</td>
+                <!-- <td>{{specialization.specializationId}}</td> -->
 
                 <td><span>{{specialization.specializationName}}</span></td>
                 <td><span>{{specialization.specializationDesc}}</span></td>
@@ -82,16 +82,7 @@
     <div class="modal-body">
         <form #f="ngForm" (ngSubmit)="onSubmit(f) ">
 
-            <div class="form-group">
-                <label for="firstname">Specialization Code:</label>
-                <div class="input-group">
-                    <input id="firstname" name="specializationCode" class="form-control " ngModel #specializationName="ngModel" required>
 
-                </div>
-                <div class="md-errors-spacer">
-                    <small class="form-text-md" *ngIf="specializationName.touched && !specializationName.valid">please enter a specialization Code</small>
-                </div>
-            </div>
 
 
             <div class="form-group">
@@ -115,59 +106,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="firstname">Specialization Require Lab:</label>
-                <div class="input-group">
-                    <input id="firstname" name="specializationRequireLab" class="form-control " ngModel #specializationName="ngModel" required>
 
-                </div>
-                <div class="md-errors-spacer">
-                    <small class="form-text-md" *ngIf="specializationName.touched && !specializationName.valid">please enter a specialization Code</small>
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <label for="lastname">Specialization Course Id:</label>
-                <!-- <div class="input-group">
-                    <input type='number' id="lastname" name="specializationCourseId" #specializationFacultyId="ngModel" class="form-control" ngModel required>
-                </div> -->
-                <label for="form"><h5>Departement: click to select departement</h5></label
-        >
-        <div class="form-group">
-          <select
-            name="specializationCourseId"
-            ngModel
-            class="form-select selectpicker"
-            required
-          >
-            <option
-              *ngFor="let departement of course"
-              [value]="departement.courseId"
-              selected>{{ departement.courseName }}</option
-            >
-          </select>
-        </div>
-        <!-- <small
-         
-            (!departement.valid && !dep) ||
-            (!departement.valid && departement.dirty)
-          "
-          >Required (Please select Departement).</small
-        > -->
-                <div class="md-errors-spacer">
-                    <small class="form-text-md" *ngIf="specializationFacultyId.touched && !specializationFacultyId.valid">please enter a description</small>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="lastname">Specialization Specialization Id:</label>
-                <div class="input-group">
-                    <input type='number' id="lastname" name="specializationSpecializationId" #specializationFacultyId="ngModel" class="form-control" ngModel required>
-                </div>
-                <div class="md-errors-spacer">
-                    <small class="form-text-md" *ngIf="specializationFacultyId.touched && !specializationFacultyId.valid">please enter a description</small>
-                </div>
-            </div>
 
             <div class="modal-footer m-10">
                 <button type="button" id="add-user-form" (click)="openSnackBar('continue in timetable', 'close')" (click)="modal.close('Save click')" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
@@ -197,13 +136,6 @@
         <form>
 
             <div class="form-group">
-                <label for="firstname">Specialization Code:</label>
-                <div class="input-group">
-                    <input id="code" class="form-control">
-                </div>
-            </div>
-
-            <div class="form-group">
                 <label for="firstname">Specialization Name:</label>
                 <div class="input-group">
                     <input id="fname" class="form-control">
@@ -217,24 +149,8 @@
                     <input id="lname" class="form-control">
                 </div>
             </div>
-            <div class="form-group">
-                <label for="specialization">Specialization Require Lab:</label>
-                <div class="input-group">
-                    <input id="dept" class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Specialization Course Id:</label>
-                <div class="input-group">
-                    <input id="email2" class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Specialization Specialization Id:</label>
-                <div class="input-group">
-                    <input id="cntry" class="form-control">
-                </div>
-            </div>
+
+
 
         </form>
     </div>
@@ -258,12 +174,12 @@
         <form #f="ngForm" (ngSubmit)="onEdit(f)" novalidate>
 
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="lastname">Specialization Id:</label>
                 <div class="input-group">
                     <input type='number' [(ngModel)]="editForm.specializationId" id="specializationId" name="specializationId" class="form-control">
                 </div>
-            </div>
+            </div> -->
 
             <div class="form-group">
                 <label for="firstname">Specialization Name:</label>

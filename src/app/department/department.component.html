@@ -76,7 +76,7 @@
         <div class="d-flex justify-content-between">...</div>
         <div class="d-flex justify-content-around">...</div> -->
 
-        <div class="row d-flex bd-highlight">
+        <div class="row  bd-highlight">
 
 
 
@@ -92,21 +92,20 @@
 
 
 
-            <div class="col-md-2 offset-3  p-2 flex-fill bd-highlight  ">
+            <div class="col-md-2 offset-1  p-2 flex-fill bd-highlight  ">
                 <button type="button" class="btn btn-block btn-success" (click)="open(content)">Add New Department</button>
 
 
             </div>
             <div class="col-md-2 p-2 flex-fill bd-highlight">
                 <button type="button" class="btn btn-block btn-info text-white" (click)="openUndo(contentUndo)">Undo Department</button>
-
+            </div>
+            <div class="col-md-2 p-2 flex-fill bd-highlight">
+                <button type="button" (click)="generateReport()" class="btn btn-block btn-warning text-white">reports Department</button>
 
             </div>
         </div>
     </div>
-
-
-
 
     <div *ngIf="loaderService.isLoading | async" class="loader-container position-absolute">
         <mat-spinner strokeWidth="10" [diameter]="65" color="black" title="Tooltip text here" style="top: 10%; left: 50%;color:black;stroke: #0000!important;"></mat-spinner>

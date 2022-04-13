@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { routeTransitionAnimations } from '../animations';
 import { LoaderService } from '../loader/loader.service';
 import { LoadingHandler } from '../loading';
+import { LoginService } from '../login/login.service';
 import { Rank } from './rank';
 
 @Component({
@@ -14,9 +15,13 @@ import { Rank } from './rank';
 })
 export class NavComponent  {
 loadingHandler = new LoadingHandler();
-//   constructor(private http: HttpClient ) { }
+  constructor(private http: HttpClient,public loginService:LoginService ) {
+    
+   }
 //   rank: Array<Rank> = [];
 active = 'top';
+
+
 
 //  loadGames () {
 //  this.rank = [];

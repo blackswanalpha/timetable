@@ -16,6 +16,10 @@ import { fadeInOnEnterAnimation, fadeInUpOnEnterAnimation, fadeOutOnLeaveAnimati
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { LoaderService } from '../loader/loader.service';
 import { LoadingHandler } from '../loading';
+import { SemesterService } from '../semester/semester.service';
+import { Semester } from '../semester/semester';
+import { Unit } from '../units/units';
+import { UnitService } from '../units/units.service';
 
 @Component({
   selector: 'app-planner',
@@ -32,6 +36,8 @@ import { LoadingHandler } from '../loading';
 })
 export class PlannerComponent implements OnInit {
   planner: Planner[] =[];
+  semester: Semester[] =[];
+  unit: Unit[] =[];
   // planner:Planner[]= [];
   closeResult: string = '';
  
@@ -40,7 +46,9 @@ export class PlannerComponent implements OnInit {
    editForm = {
    plannerId: 0,
     plannerSemesterId: 0,
-    plannerUnitId: 0
+    plannerUnitId: 0,
+    unitName:'',
+    semesterName:''
   } ;
 
   
@@ -71,7 +79,7 @@ count3: number = 0;
 count4: number = 0; 
 
 
-  constructor(public  loaderService:LoaderService,private plannerService: PlannerService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
+  constructor(public  loaderService:LoaderService,private unitService: UnitService,private semesterService: SemesterService,private plannerService: PlannerService,private modalService: NgbModal,private toastr: ToastrService,private _snackBar: MatSnackBar){}
 
 
   toggleData(name:string) {
@@ -136,6 +144,8 @@ this.count3 = 0;
     // this.getplanner();
     this.getPlanner();
     this.toggleData('dept');
+    this.getSemester();
+    this.getUnit();
     
      
      
@@ -159,6 +169,35 @@ this.planner = response;
       }
     );
   }
+
+
+  public getSemester(): void {
+    this.semesterService.getsemester().subscribe(
+      (response: Semester[]) => {
+      
+this.semester = response;
+
+        console.log(this.semester);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+   public getUnit(): void {
+    this.unitService.getunit().subscribe(
+      (response: Unit[]) => {
+      
+this.unit = response;
+
+        console.log(this.unit);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
 
   // public getplanner(): void {
   //   this.plannerService.getplanner().subscribe(
@@ -237,8 +276,8 @@ openDetails(targetModal: any, planner: Planner) {
     size: 'md'
   });
   
-      (<HTMLElement>document.getElementById('dept')).setAttribute('value',( planner.plannerSemesterId).toString());
-   (<HTMLElement>document.getElementById('email2')).setAttribute('value', (planner.plannerUnitId).toString());
+      (<HTMLElement>document.getElementById('dept')).setAttribute('value',( planner.semesterName).toString());
+   (<HTMLElement>document.getElementById('email2')).setAttribute('value', (planner.unitName).toString());
   //  (<HTMLElement>document.getElementById('cntry')).setAttribute('value',( planner.plannerMobile).toString());
 }
 

@@ -238,7 +238,7 @@ openDetails(targetModal: any, mode: Mode) {
   });
      (<HTMLElement>document.getElementById('fname')).setAttribute('value', mode.modeName);
   //  (<HTMLElement>document.getElementById('dept')).setAttribute('value', mode.modeRequireLab);
-   (<HTMLElement>document.getElementById('lname')).setAttribute('value', mode.modeDesc);
+   (<HTMLElement>document.getElementById('dept')).setAttribute('value', mode.modeDesc);
    //   (<HTMLElement>document.getElementById('dept')).setAttribute('value',( mode.modeSemesterId).toString());
   // (<HTMLElement>document.getElementById('email2')).setAttribute('value', (mode.modeUnitId).toString());
   //  (<HTMLElement>document.getElementById('cntry')).setAttribute('value',( mode.modeMobile).toString());

@@ -35,7 +35,7 @@
     <table class="table table-bordered table-striped mat-elevation-z8">
         <thead class="table-dark">
             <tr>
-                <th>Campus Id</th>
+                <!-- <th>Campus Id</th> -->
                 <th>Campus Name</th>
 
                 <th>Campus Desc</th>
@@ -46,7 +46,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let crse of campus">
-                <td><span>{{crse.campusId}}</span></td>
+                <!-- <td><span>{{crse.campusId}}</span></td> -->
                 <td><span>{{crse.campusName}}</span></td>
 
                 <td><span>{{crse.campusDesc}}</span></td>
@@ -178,13 +178,13 @@
     <div class="modal-body">
         <form #f="ngForm" (ngSubmit)="onEdit(f)" novalidate>
 
-
+            <!-- 
             <div class="form-group">
                 <label for="lastname">Campus Id:</label>
                 <div class="input-group">
                     <input type='number' [(ngModel)]="editForm.campusId" id="campusId" name="campusId" class="form-control">
                 </div>
-            </div>
+            </div> -->
             <div class="form-group">
                 <label for="firstname">Campus Name:</label>
                 <div class="input-group">

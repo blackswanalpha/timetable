@@ -194,14 +194,14 @@ onSubmit(f: NgForm) {
       (response: Specialization) => {
         console.log(response);
         this.getSpecialization();
-        this.toastr.success('Hello world!', 'Toastr fun!');
+        this.toastr.success('upda', 'Toastr fun!');
 
         f.reset();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        // alert(error.message);
         f.reset();
-        this.toastr.error('unSuccessful!', error.message);
+        console.log(error.message);
       }
     );
   }

@@ -126,7 +126,7 @@
         <table class="table table-bordered table-striped mat-elevation-z8">
             <thead class="table-dark">
                 <tr>
-                    <th>Mode Id</th>
+                    <!-- <th>Mode Id</th> -->
 
                     <th>Mode Name</th>
                     <th>Mode Desc</th>
@@ -135,7 +135,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let dept of mode">
-                    <td>{{dept.modeId}}</td>
+                    <!-- <td>{{dept.modeId}}</td> -->
 
                     <td><span>{{dept.modeName}}</span></td>
                     <td><span>{{dept.modeDesc}}</span></td>
@@ -186,18 +186,18 @@
 
 
             <div class="form-group">
-                <label for="lastname">modeSemester Id:</label>
+                <label for="lastname">mode Name:</label>
                 <div class="input-group">
-                    <input type='number' id="lastname" name="modeSemesterId" #modeSemesterId="ngModel" class="form-control" ngModel required>
+                    <input type='text' id="lastname" name="modeName" #modeSemesterId="ngModel" class="form-control" ngModel required>
                 </div>
                 <div class="md-errors-spacer">
                     <small class="form-text-md" *ngIf="modeSemesterId.touched && !modeSemesterId.valid">please enter a description</small>
                 </div>
             </div>
             <div class="form-group">
-                <label for="lastname">Mode Unit Id:</label>
+                <label for="lastname">Mode Desc:</label>
                 <div class="input-group">
-                    <input type='number' id="lastname" name="modeUnitId" #modeUnitId="ngModel" class="form-control" ngModel required>
+                    <input type='text' id="lastname" name="modeDesc" #modeUnitId="ngModel" class="form-control" ngModel required>
                 </div>
                 <div class="md-errors-spacer">
                     <small class="form-text-md" *ngIf="modeUnitId.touched && !modeUnitId.valid">please enter a description</small>
@@ -235,30 +235,14 @@
                     <input id="fname" class="form-control">
                 </div>
             </div>
-            <div class="form-group">
-                <label for="lastname">Mode Email:</label>
-                <div class="input-group">
-                    <input id="lname" class="form-control">
-                </div>
-            </div>
+
             <div class="form-group">
                 <label for="mode">Mode Desc:</label>
                 <div class="input-group">
                     <input id="dept" class="form-control">
                 </div>
             </div>
-            <div class="form-group">
-                <label>Mode Faculty Id:</label>
-                <div class="input-group">
-                    <input id="email2" class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Mode UnitId:</label>
-                <div class="input-group">
-                    <input id="cntry" class="form-control">
-                </div>
-            </div>
+
         </form>
     </div>
     <div class="modal-footer">
@@ -281,23 +265,23 @@
         <form #f="ngForm" (ngSubmit)="onEdit(f)" novalidate>
 
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="lastname">Mode Id:</label>
                 <div class="input-group">
                     <input type='number' [(ngModel)]="editForm.modeId" id="modeId" name="modeId" class="form-control">
                 </div>
-            </div>
+            </div> -->
 
             <div class="form-group">
                 <label for="lastname">Mode Name:</label>
                 <div class="input-group">
-                    <input type='number' id="modeSemesterId" [(ngModel)]="editForm.modeName" name="modeSemesterId" class="form-control">
+                    <input type='text' id="modeSemesterId" [(ngModel)]="editForm.modeName" name="modeName" class="form-control">
                 </div>
             </div>
             <div class="form-group">
                 <label for="lastname">Mode Desc:</label>
                 <div class="input-group">
-                    <input type='number' id="modeUnitId" [(ngModel)]="editForm.modeDesc" name="modeUnitId" class="form-control">
+                    <input type='text' id="modeUnitId" [(ngModel)]="editForm.modeDesc" name="modeDesc" class="form-control">
                 </div>
             </div>
             <div class="modal-footer">

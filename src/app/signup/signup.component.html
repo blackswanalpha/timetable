@@ -1,0 +1,198 @@
+<!-- <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+  {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+</button> -->
+<div class="container ">
+    <div class="row">
+        <div class="col-md-6 offset-3">
+            <!-- <header>Signup Form</header> -->
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid ">
+
+
+
+    <div class="row">
+        <div class="co-md-6 d-flex justify-content-center ">
+
+            <mat-stepper class=" mat-elevation-z8  " orientation="horizontal" linear #stepper>
+
+                <mat-step [stepControl]="secondFormGroup" completed="true" label="Step 1" state="chat">
+                    <form [formGroup]="secondFormGroup" #f="ngForm" (ngSubmit)="submit(secondFormGroup)">
+                        <ng-template matStepLabel>Fill out your address</ng-template>
+                        <div class="form-group">
+
+                            <label>Username</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-user" aria-hidden="true"></i></span>
+
+                                <input type="text" name="" formControlName="loginName" name="username" required class="form-control input_user" placeholder="Fullname">
+
+                            </div>
+
+                            <p *ngIf="error" class="error">
+                                {{ error }}
+                            </p>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label>Rank</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">@</span>
+                                <select name="loginRankId" formControlName="loginRankId" class="form-select selectpicker" required>
+            <option
+              *ngFor="let departement of rank"
+              [value]="departement.rankId"
+              selected>{{ departement.rankStatus }}</option
+            >
+          </select>
+
+                                <!-- <input type="email" class="form-control" formControlName="email" placeholder="Email" required> -->
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Password</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-key" aria-hidden="true"></i></span>
+                                <input type="password" class="form-control" formControlName="loginPassword" placeholder="password" required>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm Passsword</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-key" aria-hidden="true"></i></span>
+                                <input type="password" class="form-control" formControlName="confirm" placeholder="Confirm password" required>
+                            </div>
+                            <div *ngIf="secondFormGroup.controls['confirm']?.touched && secondFormGroup.controls['confirm']?.invalid" class="text-danger">
+
+                                <p class="help-block" *ngIf="secondFormGroup.controls['password']?.value != secondFormGroup.controls['confirm']?.value">Debe ingresar una contraseña</p>
+                            </div>
+                            <!-- <div style='color:#ff7355' *ngIf="secondFormGroup.get(['passwords','password']).value != secondFormGroup.get(['passwords','confirm_password']).value && secondFormGroup.get(['passwords','confirm_password']).value != null">
+                                Password does not match</div> -->
+                            <!-- <div *ngIf="secondFormGroup.controls['passowrd']?.touched && secondFormGroup.controls['confirm']?.invalid" class="">
+                                <div *ngIf="secondFormGroup.controls['confirm']?.hasError('required')">Password is required.</div>
+                                <div *ngIf="secondFormGroup.controls['confirm']?.hasError('confirmedValidator')">Password and Confirm Password must be match.</div>
+                            </div> -->
+                        </div>
+                        <div>
+
+                            <button [disabled]="f.invalid" class="next-2 next" mat-button matStepperNext>
+                                 Next</button>
+                        </div>
+
+
+                    </form>
+                </mat-step>
+                <mat-step [stepControl]="firstFormGroup" completed="true" label="Step 2 " state="phone">
+                    <form [formGroup]="firstFormGroup" #f2="ngForm" (ngSubmit)="onAddUsers(firstFormGroup)">
+                        <ng-template matStepLabel>Fill out your name</ng-template>
+                        <!-- <mat-form-field appearance="fill ">
+                            <mat-label>Name</mat-label>
+                            <input matInput placeholder="Last name, First name " formControlName="firstCtrl " required>
+                        </mat-form-field> -->
+
+                        <div class="form-group ">
+
+                            <label>Username</label>
+                            <div class="input-group mb-3 ">
+                                <span class="input-group-text " id="basic-addon1 "><i class="fa fa-user " aria-hidden="true "></i></span>
+
+                                <input id="fname " type="text " name=" " formControlName="userLoginId" name="username " class="form-control input_user " placeholder=" ">
+
+                            </div>
+
+                            <p *ngIf="error " class="error ">
+                                {{ error }}
+                            </p>
+
+                        </div>
+
+                        <div class="form-group ">
+
+                            <label>Fullname</label>
+                            <div class="input-group mb-3 ">
+                                <span class="input-group-text " id="basic-addon1 "><i class="fa fa-user " aria-hidden="true "></i></span>
+
+                                <input type="text " name=" " formControlName="userFullName" name="userFullName" required class="form-control input_user " placeholder="Fullname" required>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group ">
+                            <label>Email</label>
+                            <div class="input-group mb-3 ">
+                                <span class="input-group-text " id="basic-addon1 "> <i class=" fa fa-envelope " aria-hidden="true "></i></span>
+                                <input type="email" class="form-control " formControlName="userEmail" placeholder="Email " required>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label>Mobile</label>
+                            <div class="input-group mb-3 ">
+                                <span class="input-group-text " id="basic-addon1 "><i class="fa fa-phone fas-lg"></i></span>
+                                <input type="text" class="form-control" formControlName="userMobile" placeholder="Mobile" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Department</label>
+                            <div class="input-group">
+
+                                <span class="input-group-text " id="basic-addon1 ">@</span>
+                                <select name="loginRankId" formControlName="userDepartmentId" class="form-select selectpicker " required>
+            <option
+              *ngFor="let departement of department"
+              [value]="departement.departmentId"
+              selected>{{ departement.departmentName}}</option
+            >
+          </select>
+                                <!-- <input type="password " class="form-control " formControlName="password " placeholder="password " required> -->
+                            </div>
+
+                        </div>
+                        <p *ngIf="error " class="error ">
+                            {{ error }}
+                        </p>
+                        <div class="field btns ">
+                            <button class="prev-2 prev" mat-button matStepperPrevious>Back</button>
+                            <button class="next-2 next" [disabled]="f2.invalid" mat-button matStepperNext>Next</button>
+                        </div>
+
+                    </form>
+                </mat-step>
+
+                <mat-step label="Step 3">
+                    <ng-template matStepLabel>Done</ng-template>
+
+                    <div *ngIf="errr==true">
+                        <!-- <a mat-raised-button color="primary" (click)="stepper.reset()" [routerLink]="['/signup']">Reset</a>
+                         -->
+                        <button class="next-2 next" (click)="stepChanged()" mat-button (click)="stepper.reset() ">Reset</button>
+                    </div>
+                    <div *ngIf="errr==false">
+                        <p>You are now done.</p> <a mat-raised-button color="primary" [routerLink]="['/login']">Login</a> </div>
+                    <!-- <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button class="next-2 next" (click)="stepChanged()" mat-button (click)="stepper.reset() ">Reset</button>
+                    </div> -->
+                </mat-step>
+
+
+
+                <!-- Icon overrides. -->
+                <ng-template matStepperIcon="phone ">
+                    <mat-icon>call_end</mat-icon>
+                </ng-template>
+                <ng-template matStepperIcon="chat ">
+                    <mat-icon>forum</mat-icon>
+                </ng-template>
+            </mat-stepper>
+        </div>
+    </div>
+</div>

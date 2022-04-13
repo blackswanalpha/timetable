@@ -13,6 +13,9 @@ import { DepartmentComponent } from './department/department.component';
 import { UsersModule } from './users/users.module';
 import { ToastrModule } from 'ngx-toastr';
 
+
+import {MatStepperModule} from '@angular/material/stepper';
+import {  MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
@@ -47,6 +50,13 @@ import { DayComponent } from './day/day.component';
 import { CampusdayComponent } from './campusday/campusday.component';
 import { LecturerspecializationComponent } from './lecturerspecialization/lecturerspecialization.component';
 import { LecturertypeComponent } from './lecturertype/lecturertype.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { LogoutComponent } from './logout/logout.component';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { SignupComponent } from './signup/signup.component';
+import { RankComponent } from './rank/rank.component';
+
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -75,7 +85,11 @@ import { LecturertypeComponent } from './lecturertype/lecturertype.component';
     DayComponent,
     CampusdayComponent,
     LecturerspecializationComponent,
-    LecturertypeComponent
+    LecturertypeComponent,
+    LogoutComponent,
+    SignupComponent,
+    RankComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule,  BrowserAnimationsModule,ToastrModule.forRoot({
@@ -87,7 +101,10 @@ import { LecturertypeComponent } from './lecturertype/lecturertype.component';
     MatToolbarModule,
     MatSidenavModule,
     MatButtonModule,
-    MatIconModule,MatCardModule,
+     MatInputModule,
+     MatStepperModule,
+     SimpleNotificationsModule.forRoot(),
+    MatIconModule,MatCardModule, PdfViewerModule,
     MatDividerModule,MatFormFieldModule,MatSnackBarModule,    MatProgressBarModule,
     MatProgressSpinnerModule
   ],

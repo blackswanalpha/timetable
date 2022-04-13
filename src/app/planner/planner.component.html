@@ -126,7 +126,7 @@
         <table class="table table-bordered table-striped mat-elevation-z8">
             <thead class="table-dark">
                 <tr>
-                    <th>Planner Id</th>
+                    <!-- <th>Planner Id</th> -->
 
                     <th>Planner Semester Id</th>
                     <th>Planner UnitId</th>
@@ -135,10 +135,10 @@
             </thead>
             <tbody>
                 <tr *ngFor="let dept of planner">
-                    <td>{{dept.plannerId}}</td>
+                    <!-- <td>{{dept.plannerId}}</td> -->
 
-                    <td><span>{{dept.plannerSemesterId}}</span></td>
-                    <td><span>{{dept.plannerUnitId}}</span></td>
+                    <td><span>{{dept.semesterName}}</span></td>
+                    <td><span>{{dept.unitName}}</span></td>
                     <td class="d-flex justify-content-center">
 
                         <button class="btn btn-sm btn-primary text-white" (click)="openDetails(contentDetails, dept)">
@@ -185,7 +185,7 @@
 
 
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="lastname">plannerSemester Id:</label>
                 <div class="input-group">
                     <input type='number' id="lastname" name="plannerSemesterId" #plannerSemesterId="ngModel" class="form-control" ngModel required>
@@ -193,16 +193,61 @@
                 <div class="md-errors-spacer">
                     <small class="form-text-md" *ngIf="plannerSemesterId.touched && !plannerSemesterId.valid">please enter a description</small>
                 </div>
+            </div> -->
+
+            <div class="form-group">
+                <label for="lastname">Planner Semester :</label>
+                <!-- <div class="input-group">
+                    <input type='number' id="lastname" name="unitCourseId" #unitFacultyId="ngModel" class="form-control" ngModel required>
+                </div> -->
+
+                <div class="form-group">
+                    <select name="plannerSemesterId" ngModel class="form-select selectpicker" required>
+            <option
+              *ngFor="let departement of semester"
+              [value]="departement.semesterId"
+              selected>{{ departement.semesterName }}</option
+            >
+          </select>
+                </div>
+                <!-- <small
+         
+            (!departement.valid && !dep) ||
+            (!departement.valid && departement.dirty)
+          "
+          >Required (Please select Departement).</small
+        > -->
+                <!-- <div class="md-errors-spacer">
+                    <small class="form-text-md" *ngIf="unitFacultyId.touched && !unitFacultyId.valid">please enter a description</small>
+                </div> -->
             </div>
             <div class="form-group">
-                <label for="lastname">Planner Unit Id:</label>
-                <div class="input-group">
-                    <input type='number' id="lastname" name="plannerUnitId" #plannerUnitId="ngModel" class="form-control" ngModel required>
+                <label for="lastname">Planner Unit :</label>
+                <!-- <div class="input-group">
+                    <input type='number' id="lastname" name="unitCourseId" #unitFacultyId="ngModel" class="form-control" ngModel required>
+                </div> -->
+
+                <div class="form-group">
+                    <select name="plannerUnitId" ngModel class="form-select selectpicker" required>
+            <option
+              *ngFor="let departement of unit"
+              [value]="departement.unitId"
+              selected>{{ departement.unitName }}</option
+            >
+          </select>
                 </div>
-                <div class="md-errors-spacer">
-                    <small class="form-text-md" *ngIf="plannerUnitId.touched && !plannerUnitId.valid">please enter a description</small>
-                </div>
+                <!-- <small
+         
+            (!departement.valid && !dep) ||
+            (!departement.valid && departement.dirty)
+          "
+          >Required (Please select Departement).</small
+        > -->
+                <!-- <div class="md-errors-spacer">
+                    <small class="form-text-md" *ngIf="unitFacultyId.touched && !unitFacultyId.valid">please enter a description</small>
+                </div> -->
             </div>
+
             <div class="modal-footer m-10">
                 <button type="button" id="add-user-form" (click)="openSnackBar('continue in timetable', 'close')" (click)="modal.close('Save click')" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
                 <!-- <button  (click)="modal.close('Save click')" type="submit" class="btn btn-primary">Save changes</button> -->
@@ -282,22 +327,63 @@
 
 
             <div class="form-group">
-                <label for="lastname">Planner Id:</label>
-                <div class="input-group">
-                    <input type='number' [(ngModel)]="editForm.plannerId" id="plannerId" name="plannerId" class="form-control">
+                <label for="lastname">Unit Semester Id:</label>
+                <!-- <div class="input-group">
+                    <input type='number' id="lastname" name="unitCourseId" #unitFacultyId="ngModel" class="form-control" ngModel required>
+                </div> -->
+
+                <div class="form-group">
+                    <select name="plannerSemesterId" [(ngModel)]="editForm.plannerSemesterId" class="form-select selectpicker" required #unitFacultyId="ngModel">
+            <option
+              *ngFor="let departement of semester"
+              [value]="departement.semesterId"
+              selected>{{ departement.semesterName }}</option
+            >
+          </select>
+                </div>
+                <!-- <small
+         
+            (!departement.valid && !dep) ||
+            (!departement.valid && departement.dirty)
+          "
+          >Required (Please select Departement).</small
+        > -->
+                <div class="md-errors-spacer">
+                    <small class="form-text-md" *ngIf="unitFacultyId.touched && !unitFacultyId.valid">please enter a description</small>
                 </div>
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="lastname">Planner Semester Id:</label>
                 <div class="input-group">
                     <input type='number' id="plannerSemesterId" [(ngModel)]="editForm.plannerSemesterId" name="plannerSemesterId" class="form-control">
                 </div>
-            </div>
+            </div> -->
+
             <div class="form-group">
                 <label for="lastname">Planner Unit Id:</label>
-                <div class="input-group">
-                    <input type='number' id="plannerUnitId" [(ngModel)]="editForm.plannerUnitId" name="plannerUnitId" class="form-control">
+                <!-- <div class="input-group">
+                    <input type='number' id="lastname" name="unitCourseId" #unitFacultyId="ngModel" class="form-control" ngModel required>
+                </div> -->
+
+                <div class="form-group">
+                    <select name="plannerUnitId" [(ngModel)]="editForm.plannerUnitId" class="form-select selectpicker" required #unitFacultyId="ngModel">
+            <option
+              *ngFor="let departement of unit"
+              [value]="departement.unitId"
+              selected>{{ departement.unitName }}</option
+            >
+          </select>
+                </div>
+                <!-- <small
+         
+            (!departement.valid && !dep) ||
+            (!departement.valid && departement.dirty)
+          "
+          >Required (Please select Departement).</small
+        > -->
+                <div class="md-errors-spacer">
+                    <small class="form-text-md" *ngIf="unitFacultyId.touched && !unitFacultyId.valid">please enter a description</small>
                 </div>
             </div>
             <div class="modal-footer">
@@ -346,7 +432,7 @@
 
 <ng-template #contentUndo let-modal>
     <div class="modal-header">
-        <h4 class="modal-title">Confirm Delete</h4>
+        <h4 class="modal-title">Confirm Undo</h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       
     </button>
@@ -356,7 +442,7 @@
             <h2>Are you sure you want to undo this record.</h2>
 
             <div class="form-group">
-                <label for="lastname">Unit Id:</label>
+                <label for="lastname">planner Id:</label>
                 <div class="input-group">
                     <input #unitId type='number' ngModel id="plannerId" name="plannerId" class="form-control">
                 </div>

@@ -150,7 +150,7 @@ this.loadingHandler.finish();
         console.log(this.unit);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+       this.openSnackBar(error.message, 'Close');
       }
     );
   }
@@ -206,9 +206,9 @@ onSubmit(f: NgForm) {
         f.reset();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
-        f.reset();
         this.toastr.error('unSuccessful!', error.message);
+        f.reset();
+        
       }
     );
   }
@@ -223,7 +223,7 @@ this.course = response;
         console.log(this.course);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.openSnackBar(error.message, 'Close');
       }
     );
   }
@@ -236,7 +236,7 @@ this.loadingHandler.finish();
         console.log(this.specialization);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('unSuccessful', error.message);
       }
     );
   }

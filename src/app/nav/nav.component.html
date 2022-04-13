@@ -106,7 +106,7 @@
 <app-splash [duration]="2" [animationDuration]="1"></app-splash>
 
 <mat-drawer-container class="example-container" [hasBackdrop]="true">
-    <mat-drawer class="sidenav  mat-elevation-z2 bg-white text-dark" mode="side" #drawer closed>
+    <mat-drawer class="sidenav  mat-elevation-z2 bg-white text-dark" mode="over" #drawer closed>
         <img class="avatar mat-elevation-z8 img-center " src="https://source.unsplash.com/c_GmwfHBDzk/200x200" />
 
         <h4 class="name text-center">John Smith</h4>
@@ -141,7 +141,7 @@
             <li class="nav-item">
                 <a class="navbar-brand" [routerLink]="['/lecturer']" href="/lecturer">Home</a>
 
-                <a class="navbar-brand" [routerLink]="['/users']" href="/users">Profile</a>
+                <a class="navbar-brand" [routerLink]="['/profile']" href="/profile">Profile</a>
 
                 <a class="navbar-brand" [routerLink]="['/department']" href="/department">settings</a>
 
@@ -174,6 +174,9 @@
 
                 <a [routerLink]="['/mode']" href="/mode">mode</a>
 
+                <!-- <a mat-button class="nav-link">LogOut</a> -->
+
+
 
             </li>
         </ul>
@@ -181,7 +184,7 @@
 
         <ul class="list-unstyled CTAs">
             <!-- <li><a href="#" class="download">Download source</a></li> -->
-            <li><a href="#" class="article">logout</a></li>
+            <li><a href="/logout" *ngIf="loginService.isUserLoggedIn()" [routerLink]="['/logout']" class="article">logout</a></li>
         </ul>
     </mat-drawer>
     <mat-drawer-content class="content  ">
@@ -197,11 +200,12 @@
         </mat-icon>
     </button> -->
 
-                <button mat-icon-button (click)="drawer.toggle()"> 
+                <button mat-icon-button (click)="drawer.toggle()" *ngIf="loginService.isUserLoggedIn()"> 
         <mat-icon style="color:white;" *ngIf="!drawer.opened">
             menuv
         </mat-icon>
         <mat-icon style="color:white;" *ngIf="drawer.opened">
+            
             menuv
         </mat-icon></button>
 
@@ -226,14 +230,14 @@
                 </div> -->
 
 
-                <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills collapse navbar-collapse justify-content-end">
-                    <li ngbNavItem>
+                <ul ngbNav #nav="ngbNav" *ngIf="loginService.isUserLoggedIn()" [(activeId)]="active" class="nav-pills collapse navbar-collapse justify-content-end">
+                    <li ngbNavItem="">
 
-                        <a class="navbar-brand p-3" ngbNavLink [routerLink]="['/lecturer']" href="/lecturer">lecturer</a>
+                        <a class="navbar-brand p-3 " aria-current="page" ngbNavLink [routerLink]="['/lecturer']" href="/lecturer">lecturer</a>
 
 
                     </li>
-                    <li ngbNavItem>
+                    <li ngbNavItem="middle">
 
                         <a class="navbar-brand p-3" ngbNavLink [routerLink]="['/users']" href="/users">users</a>
 
@@ -263,9 +267,13 @@
 
 
                     </li>
+
+
+
                 </ul>
                 <!-- <div [ngbNavOutlet]="nav"></div> -->
             </nav>
+            <!-- <a mat-button *ngIf="!loginService.isUserLoggedIn()" [routerLink]="['/login']">Login</a> -->
             <div [@triggerName]="prepareRoute(outlet)">
                 <router-outlet #outlet="outlet">
 
@@ -274,3 +282,6 @@
         </div>
     </mat-drawer-content>
 </mat-drawer-container>
+
+
+<simple-notifications></simple-notifications>

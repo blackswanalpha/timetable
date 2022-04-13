@@ -1,0 +1,124 @@
+mat-stepper {
+    margin-top: 8px;
+    border-radius: 5px;
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+}
+
+.mat-form-field {
+    margin-top: 16px;
+}
+
+mat-step {
+    width: 100%;
+}
+
+
+/* @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+} */
+
+header {
+    font-size: 35px;
+    font-weight: 600;
+    margin: 0 0 30px 0;
+}
+
+button {
+    width: 40%;
+    height: calc(100% + 5px);
+    border: none;
+    background: #c0392b;
+    margin-top: 20px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.5s ease;
+}
+
+button:hover {
+    background: #000;
+}
+
+button {
+    margin-top: 20px !important;
+}
+
+button.prev {
+    margin-right: 3px;
+    font-size: 17px;
+}
+
+button.next {
+    margin-left: 13px;
+}
+
+.btns button {
+    margin-top: 20px !important;
+}
+
+.btns button.prev {
+    margin-right: 3px;
+    font-size: 17px;
+}
+
+.container .progress-bar {
+    display: flex;
+    margin: 40px 0;
+    user-select: none;
+}
+
+
+/* input.ng-invalid {
+    border-left: 5px solid red
+}
+
+input.ng-isvalid {
+    border-left: 5px solid green
+} */
+
+
+/* h1 {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0 0 30px 0;
+} */
+
+
+/* .input-group-text {
+    background: #c0392b !important;
+    color: white !important;
+    border: 0 !important;
+    font-family: 'Poppins', sans-serif;
+    height: 100%;
+    border-radius: 0.25rem 0 0 0.25rem !important;
+} */
+
+.input-group-text {
+    background: #c0392b !important;
+    color: white !important;
+    border: 0 !important;
+    font-family: 'Poppins', sans-serif;
+    height: 100%;
+    font-size: 26px;
+    border-radius: 0.25rem 0 0 0.25rem !important;
+}
+
+
+/* .input-group-text i {
+   
+} */
+
+.input_user,
+.input_pass:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}

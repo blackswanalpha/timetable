@@ -34,7 +34,7 @@
     <table class="table table-bordered table-striped mat-elevation-z8">
         <thead class="table-dark">
             <tr>
-                <th>Semester Id</th>
+                <!-- <th>Semester Id</th> -->
 
                 <th>Semester Name</th>
 
@@ -45,7 +45,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let semester of semester">
-                <td><span>{{semester.semesterId}}</span></td>
+                <!-- <td><span>{{semester.semesterId}}</span></td> -->
 
                 <td><span>{{semester.semesterName}}</span></td>
                 <td><span>{{semester.semesterYear}}</span></td>
@@ -82,16 +82,7 @@
     <div class="modal-body">
         <form #f="ngForm" (ngSubmit)="onSubmit(f) ">
 
-            <div class="form-group">
-                <label for="firstname">Semester Code:</label>
-                <div class="input-group">
-                    <input id="firstname" name="semesterCode" class="form-control " ngModel #semesterName="ngModel" required>
 
-                </div>
-                <div class="md-errors-spacer">
-                    <small class="form-text-md" *ngIf="semesterName.touched && !semesterName.valid">please enter a semester Code</small>
-                </div>
-            </div>
 
 
             <div class="form-group">
@@ -106,63 +97,9 @@
             </div>
 
             <div class="form-group">
-                <label for="lastname">Semester Desc:</label>
+                <label for="lastname">Semester Year:</label>
                 <div class="input-group">
-                    <input id="lastname" name="semesterDesc" class="form-control" #semesterDesc="ngModel" ngModel required>
-                </div>
-                <div class="md-errors-spacer">
-                    <small class="form-text-md" *ngIf="semesterDesc.touched && !semesterDesc.valid">please enter a description</small>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="firstname">Semester Require Lab:</label>
-                <div class="input-group">
-                    <input id="firstname" name="semesterRequireLab" class="form-control " ngModel #semesterName="ngModel" required>
-
-                </div>
-                <div class="md-errors-spacer">
-                    <small class="form-text-md" *ngIf="semesterName.touched && !semesterName.valid">please enter a semester Code</small>
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <label for="lastname">Semester Course Id:</label>
-                <!-- <div class="input-group">
-                    <input type='number' id="lastname" name="semesterCourseId" #semesterFacultyId="ngModel" class="form-control" ngModel required>
-                </div> -->
-                <label for="form"><h5>Departement: click to select departement</h5></label
-        >
-        <div class="form-group">
-          <select
-            name="semesterCourseId"
-            ngModel
-            class="form-select selectpicker"
-            required
-          >
-            <option
-              *ngFor="let departement of course"
-              [value]="departement.courseId"
-              selected>{{ departement.courseName }}</option
-            >
-          </select>
-        </div>
-        <!-- <small
-         
-            (!departement.valid && !dep) ||
-            (!departement.valid && departement.dirty)
-          "
-          >Required (Please select Departement).</small
-        > -->
-                <div class="md-errors-spacer">
-                    <small class="form-text-md" *ngIf="semesterFacultyId.touched && !semesterFacultyId.valid">please enter a description</small>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="lastname">Semester Specialization Id:</label>
-                <div class="input-group">
-                    <input type='number' id="lastname" name="semesterSpecializationId" #semesterFacultyId="ngModel" class="form-control" ngModel required>
+                    <input type='number' id="lastname" name="semesterYear" #semesterFacultyId="ngModel" class="form-control" ngModel required>
                 </div>
                 <div class="md-errors-spacer">
                     <small class="form-text-md" *ngIf="semesterFacultyId.touched && !semesterFacultyId.valid">please enter a description</small>
@@ -196,12 +133,7 @@
     <div class="modal-body">
         <form>
 
-            <div class="form-group">
-                <label for="firstname">Semester Code:</label>
-                <div class="input-group">
-                    <input id="code" class="form-control">
-                </div>
-            </div>
+
 
             <div class="form-group">
                 <label for="firstname">Semester Name:</label>
@@ -211,26 +143,11 @@
             </div>
 
 
+
+
+
             <div class="form-group">
-                <label for="semester">Semester Desc:</label>
-                <div class="input-group">
-                    <input id="lname" class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="semester">Semester Require Lab:</label>
-                <div class="input-group">
-                    <input id="dept" class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Semester Course Id:</label>
-                <div class="input-group">
-                    <input id="email2" class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Semester Specialization Id:</label>
+                <label>Semester Year:</label>
                 <div class="input-group">
                     <input id="cntry" class="form-control">
                 </div>
@@ -257,13 +174,13 @@
     <div class="modal-body">
         <form #f="ngForm" (ngSubmit)="onEdit(f)" novalidate>
 
-
+            <!-- 
             <div class="form-group">
                 <label for="lastname">Semester Id:</label>
                 <div class="input-group">
                     <input type='number' [(ngModel)]="editForm.semesterId" id="semesterId" name="semesterId" class="form-control">
                 </div>
-            </div>
+            </div> -->
 
             <div class="form-group">
                 <label for="firstname">Semester Name:</label>
@@ -276,9 +193,9 @@
 
 
             <div class="form-group">
-                <label for="lastname">Semester Specialization Id:</label>
+                <label for="lastname">Semester Year:</label>
                 <div class="input-group">
-                    <input type='number' id="semesterSpecializationId" [(ngModel)]="editForm.semesterYear" name="semesterSpecializationId" class="form-control">
+                    <input type='number' id="semesterSpecializationId" [(ngModel)]="editForm.semesterYear" name="semesterYear" class="form-control">
                 </div>
             </div>
 

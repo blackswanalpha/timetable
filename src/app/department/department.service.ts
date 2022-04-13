@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { delay, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -34,6 +34,18 @@ export class DepartmentService {
   console.log('dfdvsdfvdfv');
     console.log( department);
     return this.http.post< Department>(`${this.apiServerUrl}/timetable/department/undoDepartment`,  department);
+  }
+
+
+ generateCustomersReport(format:string):Observable<any>{
+
+    let queryparams = new HttpParams();
+    queryparams = queryparams.append("format", format);
+
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', 'application/pdf');
+
+    return this.http.get(`${this.apiServerUrl}/timetable/department/report/pdf`, {headers:headers, params:queryparams, responseType: 'blob'})
   }
 
   // -------department
